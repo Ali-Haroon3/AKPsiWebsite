@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Alpha Kappa Psi - Calendar</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link href="/assets/css/ionics.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/css/ionics.min.css" rel="stylesheet">
+  <link href="/assets/css/animate.min.css" rel="stylesheet">
+  <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
+  <link href="/assets/css/fonts.css" rel="stylesheet">
+  <link href="/assets/img/favicon.png" rel="icon">
+  <script src="jquery-3.7.1.min.js"></script>
+</head>
+
+<body class="is-preload">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"> </script>
+
+  <div class="points-body">
+    <section class="points-header">
+      <div class="member-logo-points">
+        <img class="logo-image" src="../images/logo.png" alt="Chapter Logo" href="/" />
+      </div>
+      <a class="nav-link1" href="points.html">Points</a>
+      <a class="nav-link2" href="calendar.html">Calendar</a>
+      <a class="nav-link3" href="login.html">Logout</a>
+    </section>
+
+    <section class="calendar-body">
+      <div class="no-events">
+        <h>There are no events scheduled rn :( <br> Check back soon for any updates!</h>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Mock fetching an array of JSON file names
+        simulateFetchJsonFiles().then(jsonFiles => {
+          jsonFiles.forEach(file => {
+            fetch(file)
+              .then(response => response.json())
+              .then(data => {
+                document.querySelector('.calendar-body').appendChild(createCalendarEvent(data));
+              })
+              .catch(error => console.error('Error loading the JSON file:', error));
+          });
+        });
+
+        // Extended Test Case with sorting: Load multiple known events to test the creation function
+        const testData = [
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          },
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          },
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          }
+        ];
+
+        // Sort events by month and date
+        testData.sort((a, b) => {
+          return (a.month + a.date) < (b.month + b.date) ? 1 : -1;
+        });
+
+        // Process each test event
+        testData.forEach(event => {
+          document.querySelector('.calendar-body').appendChild(createCalendarEvent(event));
+        });
+      });
+
+      function createCalendarEvent(data) {
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'calendar-event';
+
+        const eventLeft = document.createElement('div');
+        eventLeft.className = 'event-left';
+        eventLeft.innerHTML = `<h class="month">${data.month}</h><h class="date">${data.date}</h>`;
+
+        const eventRight = document.createElement('div');
+        eventRight.className = 'event-right';
+        eventRight.innerHTML = `
+                    <p class="type">${data.type}</p>
+                    <h class="title">${data.title}</h>
+                    <div class="time">
+                        <ion-icon class="idfk" name="time"></ion-icon>
+                        <p class="hour">${data.time}</p>
+                    </div>`;
+
+        eventDiv.appendChild(eventLeft);
+        eventDiv.appendChild(eventRight);
+
+        return eventDiv;
+      }
+
+      function simulateFetchJsonFiles() {
+        return new Promise(resolve => {
+          // Simulate an async task where you fetch JSON file names
+          setTimeout(() => {
+            resolve(['data1.json', 'data2.json', 'data3.json']);  // Simulate file names
+          }, 1000);
+        });
+      }
+    </script>
+
+    <section class="points-footer calendar">
+      <div class="points-footer-content">
+        <p class="footer-credits">Designed by William van Vuuren, Cole Younoszai, Ali Haroon <br> &copy; 2024 Alpha Kappa Psi</h>
+        <p class="footer-links">For more details on events and requirements: <a class="footer" href="https://apple.com">see here</a></h>
+      </div>
+    </section>
+  </div>
+
+  <div id="wrapper" class="divided">
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/mobile-nav.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </div>
+</body>
+
+</html>
