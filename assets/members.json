@@ -1,0 +1,34 @@
+{
+    "members": [
+      {
+        "name": "Shaz Hussain",
+        "title": "President",
+        "image": "images/headshots/ShazHeadshot.jpg",
+        "linkedin": ""
+      },
+      {
+        "name": "Anna Schaefer",
+        "title": "Vice President",
+        "image": "images/headshots/AnnaHeadshot.jpeg",
+        "linkedin": ""
+      },
+      {
+        "name": "Jaque Spradley",
+        "title": "VP of Marketing",
+        "image": "images/headshots/JTuck (1).jpeg",
+        "linkedin": ""
+      },
+      {
+        "name": "Josh Tucker",
+        "title": "Secretary",
+        "image": "images/headshots/JTuck (1).jpeg",
+        "linkedin": ""
+      },
+      {
+        "name": "Ali Haroon",
+        "title": "IT Director",
+        "image": "images/headshots/HaroonHeadshot (1).jpg",
+        "linkedin": ""
+      }
+    ]
+  }
