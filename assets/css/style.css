@@ -203,13 +203,13 @@ header ul li a {
     opacity: .64;
 }
 
-.rush .hero-section {
-    background: url(../images/rush-hero-bg.png) no-repeat center center/cover;
+.recruitment .hero-section {
+    background: url(../images/recruitment-hero-bg.png) no-repeat center center/cover;
     height: 100vh;
 
 }
 
-.rush .hero-section .col-1 h2 {
+.recruitment .hero-section .col-1 h2 {
     color: rgba(255, 255, 255, 1.00);
     font-size: 110px;
     font-weight: 800;
@@ -431,7 +431,7 @@ header ul li a {
     color: var(--white-color);
 }
 
-.rush-section h1 {
+.recruitment-section h1 {
     color: var(--secondary-color);
     text-align: center;
     font-size: 80px;
@@ -439,7 +439,7 @@ header ul li a {
     margin-bottom: 6px;
 }
 
-.rush-section p {
+.recruitment-section p {
     color: var(--black-color);
     text-align: center;
     font-size: 35px;
@@ -447,7 +447,7 @@ header ul li a {
     margin-bottom: 10px;
 }
 
-.rush-section .btn a {
+.recruitment-section .btn a {
     padding: 8px 40px;
 }
 
@@ -643,37 +643,37 @@ header ul li a {
     line-height: normal;
 }
 
-/* CODE FOR rush page */
-.rush-page .single-content h1 {
+/* CODE FOR recruitment page */
+.recruitment-page .single-content h1 {
     color: var(--secondary-color);
     font-size: 50px;
     font-weight: 800;
     line-height: 1.4;
 }
 
-.rush-page .single-content p {
+.recruitment-page .single-content p {
     color: var(--black-color);
     text-align: center;
     font-size: 25px;
     font-weight: 400;
 }
 
-.rush-page .single-content p a {
+.recruitment-page .single-content p a {
     text-decoration: underline;
     color: var(--black-color);
 }
 
-.rush-page .single-content p a:hover {
+.recruitment-page .single-content p a:hover {
     text-decoration: none;
 }
 
-.rush-page .single-content .btn a {
+.recruitment-page .single-content .btn a {
     background-color: transparent;
     color: var(--light-primary-color);
     margin-top: 10px;
 }
 
-.rush-page .single-content .btn a:hover {
+.recruitment-page .single-content .btn a:hover {
     background-color: var(--light-primary-color);
     color: var(--white-color);
 }
@@ -681,7 +681,7 @@ header ul li a {
 
 /* code for faqs secton */
 
-.rush-page .container:nth-child(3) h1 {
+.recruitment-page .container:nth-child(3) h1 {
     font-size: 40px;
     margin-bottom: 30px;
     color: var(--secondary-color);
@@ -739,22 +739,22 @@ details[open] summary::after {
 
 }
 
-.rush-page .container:nth-child(2) {
+.recruitment-page .container:nth-child(2) {
     background-color: var(--secondary-color);
 }
 
-.rush-page .container:nth-child(2) .sub-row {
+.recruitment-page .container:nth-child(2) .sub-row {
     margin-bottom: 80px;
 }
 
-.rush-page .container:nth-child(2) h1.center {
+.recruitment-page .container:nth-child(2) h1.center {
     margin-bottom: 50px;
     color: rgba(255, 255, 255, 1.00);
     font-size: 50px;
     font-weight: 800;
 }
 
-.rush-page .container:nth-child(2) .col-1 {
+.recruitment-page .container:nth-child(2) .col-1 {
     background-color: var(---dark-secondary-color);
     border: 2px solid var(--white-color);
     border-radius: 15px;
@@ -765,7 +765,7 @@ details[open] summary::after {
     text-align: center;
 }
 
-.rush-page .container:nth-child(2) .col-1 h2 {
+.recruitment-page .container:nth-child(2) .col-1 h2 {
     color: var(--white-color);
     text-align: center;
     line-height: 1;
@@ -774,35 +774,35 @@ details[open] summary::after {
 
 }
 
-.rush-page .container:nth-child(2) .col-2 h1 {
+.recruitment-page .container:nth-child(2) .col-2 h1 {
     color: var(--white-color);
     font-size: 50px;
     font-weight: 800;
     margin-bottom: 10px;
 }
 
-.rush-page .container:nth-child(2) .col-2 h1 span {
+.recruitment-page .container:nth-child(2) .col-2 h1 span {
     color: var(--light-primary-color);
     font-family: Inter;
     font-size: 30px;
     font-weight: 500;
 }
 
-.rush-page .container:nth-child(2) .col-2 p {
+.recruitment-page .container:nth-child(2) .col-2 p {
     color: var(--white-color);
     font-size: 23px;
     font-weight: 400;
     margin-bottom: 10px;
 }
 
-.rush-page .container:nth-child(2) .col-2 .btn a {
+.recruitment-page .container:nth-child(2) .col-2 .btn a {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     border: 2px solid var(--primary-color);
     padding: 8px 20px;
 }
 
-.rush-page .container:nth-child(2) .col-2 .btn a:hover {
+.recruitment-page .container:nth-child(2) .col-2 .btn a:hover {
     background-color: transparent;
     color: var(--primary-color);
 }
@@ -1165,13 +1165,13 @@ footer p {
         font-size: 70px;
     }
 
-    .rush-section h1,
+    .recruitment-section h1,
     .do-matter .col-12 h1 {
         font-size: 50px;
     }
 
     .hero-section .row .col-12 p,
-    .rush-section p {
+    .recruitment-section p {
         font-size: 18px;
     }
 
@@ -1212,15 +1212,15 @@ footer p {
         height: 30%;
     }
 
-    .rush-page .container:nth-child(2) .sub-row {
+    .recruitment-page .container:nth-child(2) .sub-row {
         flex-direction: column;
     }
 
-    .rush-page .container:nth-child(2) .sub-row:nth-child(even) {
+    .recruitment-page .container:nth-child(2) .sub-row:nth-child(even) {
         flex-direction: column-reverse;
     }
 
-    .rush-page .container:nth-child(2) .col-1 {
+    .recruitment-page .container:nth-child(2) .col-1 {
         margin: auto;
         padding: 30px 10px;
         width: 230px;
@@ -1259,7 +1259,7 @@ footer p {
 
 @media screen and (max-width: 660.98px) {
 
-    .rush .hero-section {
+    .recruitment .hero-section {
         height: auto;
 
     }
@@ -1323,30 +1323,30 @@ footer p {
         font-size: 40px;
     }
 
-    .rush-page .container:nth-child(3) h1 {
+    .recruitment-page .container:nth-child(3) h1 {
         font-size: 22px;
         margin-bottom: 30px;
         color: var(--secondary-color);
     }
 
-    .rush-page .container:nth-child(2) .col-2 h1 {
+    .recruitment-page .container:nth-child(2) .col-2 h1 {
         font-size: 36px;
     }
 
-    .rush-page .container:nth-child(2) .col-2 h1 span {
+    .recruitment-page .container:nth-child(2) .col-2 h1 span {
         font-size: 24px;
     }
 
-    .rush-page .container:nth-child(2) .col-2 p {
+    .recruitment-page .container:nth-child(2) .col-2 p {
         font-size: 20px;
     }
 
-    .rush-page .single-content h1 {
+    .recruitment-page .single-content h1 {
         font-size: 40px;
         line-height: 1.2;
     }
 
-    .rush-page .single-content p {
+    .recruitment-page .single-content p {
         font-size: 22px;
     }
 
