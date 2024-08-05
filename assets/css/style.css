@@ -1355,3 +1355,6 @@ footer p {
     }
 
 }
+.box.mobile ul.d-flex li a {
+    font-size: 15px; /* Adjust the size as needed */
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership - ALPHA KAPPA PSI</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <!-- Content sections go here -->
+
+    <section>
+        <div class="container story">
+            <div class="row about-us-h">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <h3 style="background: -webkit-linear-gradient(45deg,var(--primary-dark) 0%,var(--primary-medium)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; font-size: 40px;">
+                    Our Members</h3>
+                </div>
+            </div>
+            <div class="row justify-content-center about-us-h" id="members">
+
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </section>
+
+
+
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        async function loadHTML(elementId, filePath) {
+            const response = await fetch(filePath);
+            const text = await response.text();
+            document.getElementById(elementId).innerHTML = text;
+        }
+
+        loadHTML('header', 'views/partials/header.html');
+        loadHTML('footer', 'views/partials/footer.html');
+    </script>
+</body>
+</html>
