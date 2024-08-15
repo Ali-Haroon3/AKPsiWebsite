@@ -4,32 +4,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sponsorship - ALPHA KAPPA PSI</title>
+    <title>Leadership - ALPHA KAPPA PSI</title>
+    <!-- link for css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- link for font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
-<body>
-    <div id="header"></div>
+<body class="about-page leadership-page">
+    <!-- code for header -->
+    <header>
+        <div class="container-fluid">
+            <div class="row d-flex align-center justify-between">
+                <div class="box">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/logo.png" alt="ALPHA KAPPA PSI" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+                <div class="box mobile">
+                    <ul class="d-flex align-center">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="sponsorship.html">Sponsorship</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="portal.html">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="box pc">
+                    <!-- The overlay -->
+                    <div id="myNav" class="overlay">
 
-    <!-- Content sections go here -->
+                        <!-- Button to close the overlay navigation -->
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-    <div id="footer"></div>
+                        <!-- Overlay content -->
+                        <div class="overlay-content">
+                            <a href="index.html">Home</a>
+                            <a href="about.html">About us</a>
+                            <a href="recruitment.html">Recruitment</a>
+                            <a href="portal.html">Member Portal</a>
+                        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+                    </div>
+
+                    <!-- Use any element to open/show the overlay navigation menu -->
+                    <span onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Sponsorship</h1>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sponsorship-tiers-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Sponsorship Tiers</h2>
+                    <div class="tier">
+                        <h3>Gold Sponsor</h3>
+                        <p>Details about the Gold sponsorship level, including benefits and pricing.</p>
+                    </div>
+                    <div class="tier">
+                        <h3>Silver Sponsor</h3>
+                        <p>Details about the Silver sponsorship level, including benefits and pricing.</p>
+                    </div>
+                    <div class="tier">
+                        <h3>Bronze Sponsor</h3>
+                        <p>Details about the Bronze sponsorship level, including benefits and pricing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-1">
+                    <h4>Browse</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="#">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-1">
+                    <h4>Contact Us</h4>
+                    <p>Koelbel Building <br>
+                        Leeds School of Business <br>
+                        995 Regent Dr, Boulder, CO <br> 80309</p>
+                    <a href="mailto:akpsi@colorado.edu">akpsi@colorado.edu</a>
+                </div>
+                <div class="col-1">
+                    <h4>Keep in touch</h4>
+                    <div class="icons d-flex align-center">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-solid fa-envelope-open"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="assets/js/script.js"></script>
-    <script>
-        async function loadHTML(elementId, filePath) {
-            const response = await fetch(filePath);
-            const text = await response.text();
-            document.getElementById(elementId).innerHTML = text;
-        }
 
-        loadHTML('header', 'views/partials/header.html');
-        loadHTML('footer', 'views/partials/footer.html');
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
     </script>
 </body>
+
 </html>

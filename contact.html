@@ -5,31 +5,246 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - ALPHA KAPPA PSI</title>
+    <!-- link for css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- link for font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-</head>
-
-<body>
-    <div id="header"></div>
-
-    <!-- Content sections go here -->
-
-    <div id="footer"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
-    <script>
-        async function loadHTML(elementId, filePath) {
-            const response = await fetch(filePath);
-            const text = await response.text();
-            document.getElementById(elementId).innerHTML = text;
+    <style>
+        /* Custom styles to match the form style */
+        .contact-page .form-group {
+            margin-bottom: 20px;
         }
 
-        loadHTML('header', 'views/partials/header.html');
-        loadHTML('footer', 'views/partials/footer.html');
+        .contact-page input,
+        .contact-page textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .contact-page input:focus,
+        .contact-page textarea:focus {
+            border-color: #666;
+            outline: none;
+        }
+
+        .contact-page .btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            width: 100%;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .contact-page .btn:hover {
+            background-color: #555;
+        }
+
+        .contact-page .required {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body class="about-page leadership-page">
+    <!-- code for header -->
+    <header>
+        <div class="container-fluid">
+            <div class="row d-flex align-center justify-between">
+                <div class="box">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/logo.png" alt="ALPHA KAPPA PSI" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+                <div class="box mobile">
+                    <ul class="d-flex align-center">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="sponsorship.html">Sponsorship</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="portal.html">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="box pc">
+                    <!-- The overlay -->
+                    <div id="myNav" class="overlay">
+
+                        <!-- Button to close the overlay navigation -->
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+                        <!-- Overlay content -->
+                        <div class="overlay-content">
+                            <a href="index.html">Home</a>
+                            <a href="about.html">About us</a>
+                            <a href="recruitment.html">Recruitment</a>
+                            <a href="portal.html">Member Portal</a>
+                        </div>
+
+                    </div>
+
+                    <!-- Use any element to open/show the overlay navigation menu -->
+                    <span onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Contact</h1>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-page py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <!-- Bootstrap-enhanced Contact Form -->
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="firstName">Name <span class="required">(required)</span></label>
+                            <div class="d-flex">
+                                <input type="text" id="firstName" name="firstName" class="form-control me-2" placeholder="First Name" required>
+                                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail Address <span class="required">(required)</span></label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="E-mail Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject <span class="required">(required)</span></label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message <span class="required">(required)</span></label>
+                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Submit</button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Contact Information and Pinned Google Map -->
+                    <div class="contact-info">
+                        <p><strong>Address:</strong> 995 Regent Dr, Boulder, CO 80309</p>
+                        <p><strong>Email:</strong> <a href="mailto:akpsi@colorado.edu">akpsi@colorado.edu</a></p>
+                        <p><strong>Phone:</strong> (123) 456-7890</p>
+                    </div>
+                    <div class="map-responsive">
+                        <iframe 
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBsSOzMXvSgInojYMJ7_vfoz-jH446wRDU&q=995+Regent+Dr,+Boulder,+CO+80309" 
+                            width="600" 
+                            height="450" 
+                            frameborder="0" 
+                            style="border:0;" 
+                            allowfullscreen="">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-1">
+                    <h4>Browse</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="#">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-1">
+                    <h4>Contact Us</h4>
+                    <p>Koelbel Building <br>
+                        Leeds School of Business <br>
+                        995 Regent Dr, Boulder, CO <br> 80309</p>
+                    <a href="mailto:akpsi@colorado.edu">akpsi@colorado.edu</a>
+                </div>
+                <div class="col-1">
+                    <h4>Keep in touch</h4>
+                    <div class="icons d-flex align-center">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-solid fa-envelope-open"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
     </script>
 </body>
+
 </html>
