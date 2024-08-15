@@ -1435,3 +1435,85 @@ footer p {
     background-color: #000;
     color: #fff;
 }
+.sponsorship-page .hero-section {
+    position: relative;
+    background: url(/images/companies/SponsorshipImage.jpg) no-repeat center center/cover;
+    height: 100vh;
+    z-index: -2;
+}
+.leadership-page .hero-section{
+    position: relative;
+    background: url(/images/cu3.jpeg) no-repeat center center/cover;
+    height: 100vh;
+    z-index: -2;
+}
+.legacy-page .alumni-spotlight .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap; /* Ensures content wraps properly on smaller screens */
+}
+
+.legacy-page .alumni-spotlight .col-lg-4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    flex: 1;
+    max-width: 32%; /* Adjusts to ensure space between columns */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    margin-bottom: 20px;
+}
+
+.legacy-page .fixed-size-image {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.legacy-page .alumni-spotlight .col-lg-4 h3,
+.legacy-page .alumni-spotlight .col-lg-4 h4 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.legacy-page .alumni-spotlight .col-lg-4 p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.legacy-page .alumni-spotlight .col-lg-4 .btn {
+    margin-top: auto;
+    align-self: center; /* Ensures the button stays centered */
+}
+.legacy-page .alumni-spotlight .btn-primary {
+    background-color: transparent;
+    color: #000; /* Use a dark color for the text */
+    border: 2px solid #000; /* Add a solid border */
+    border-radius: 4px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.legacy-page .alumni-spotlight .btn-primary:hover {
+    background-color: #000; /* Fill the button with black on hover */
+    color: #fff; /* Change the text color to white */
+}
+.legacy-page .alumni-companies .company-logo {
+    width: 100%;
+    max-width: 100px; /* Set the maximum width for the logos */
+    height: 100px; /* Ensure the logos are square */
+    object-fit: contain; /* Fit the image within the square without stretching */
+}
+
+.legacy-page .alumni-companies .col-lg-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* Add padding for spacing between columns */
+}
