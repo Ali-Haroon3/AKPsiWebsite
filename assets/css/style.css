@@ -1437,13 +1437,13 @@ footer p {
 }
 .sponsorship-page .hero-section {
     position: relative;
-    background: url(/images/companies/SponsorshipImage.jpg) no-repeat center center/cover;
+    background: url(../images/companies/SponsorshipImage.jpg) no-repeat center center/cover;
     height: 100vh;
     z-index: -2;
 }
 .leadership-page .hero-section{
     position: relative;
-    background: url(/images/cu3.jpeg) no-repeat center center/cover;
+    background: url(../images/cu3.jpeg) no-repeat center center/cover;
     height: 100vh;
     z-index: -2;
 }
