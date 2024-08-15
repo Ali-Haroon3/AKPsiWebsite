@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leadership - ALPHA KAPPA PSI</title>
-    <!-- link for css -->
+    <title>Sponsorship - ALPHA KAPPA PSI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- link for font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
+<body class="about-page sponsorship-page">
 
-<body class="about-page leadership-page">
-    <!-- code for header -->
+    <!-- Header -->
     <header>
         <div class="container-fluid">
             <div class="row d-flex align-center justify-between">
@@ -40,29 +34,22 @@
                     </ul>
                 </div>
                 <div class="box pc">
-                    <!-- The overlay -->
                     <div id="myNav" class="overlay">
-
-                        <!-- Button to close the overlay navigation -->
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-                        <!-- Overlay content -->
                         <div class="overlay-content">
                             <a href="index.html">Home</a>
                             <a href="about.html">About us</a>
                             <a href="recruitment.html">Recruitment</a>
                             <a href="portal.html">Member Portal</a>
                         </div>
-
                     </div>
-
-                    <!-- Use any element to open/show the overlay navigation menu -->
                     <span onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="row">
@@ -73,27 +60,42 @@
             </div>
         </div>
     </section>
-    <section class="sponsorship-tiers-section">
+
+    <!-- Sponsorship Section -->
+    <section class="sponsorship-section">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <h2>Sponsorship Tiers</h2>
-                    <div class="tier">
-                        <h3>Gold Sponsor</h3>
-                        <p>Details about the Gold sponsorship level, including benefits and pricing.</p>
-                    </div>
-                    <div class="tier">
-                        <h3>Silver Sponsor</h3>
-                        <p>Details about the Silver sponsorship level, including benefits and pricing.</p>
-                    </div>
-                    <div class="tier">
-                        <h3>Bronze Sponsor</h3>
-                        <p>Details about the Bronze sponsorship level, including benefits and pricing.</p>
-                    </div>
+                <div class="col-md-6 sponsor">
+                    <a href="#"><img src="assets/images/logo.png" alt="Davita Kidney Care" class="img-fluid"></a>
+                    <h3>Davita Dialysis</h3>
+                    <p>DaVita Dialysis is a leading provider of kidney care services...</p>
+                    <a href="#" class="learn-more">Learn More</a>
+                </div>
+                <div class="col-md-6 sponsor">
+                    <a href="#"><img src="assets/images/logo.png" alt="FTI Consulting" class="img-fluid"></a>
+                    <h3>FTI Consulting</h3>
+                    <p>FTI Consulting is a global business advisory firm...</p>
+                    <a href="#" class="learn-more">Learn More</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 sponsor">
+                    <a href="#"><img src="assets/images/logo.png" alt="Deloitte" class="img-fluid"></a>
+                    <h3>Deloitte</h3>
+                    <p>Deloitte has one of the largest professional services networks...</p>
+                    <a href="#" class="learn-more">Learn More</a>
+                </div>
+                <div class="col-md-6 sponsor">
+                    <a href="#"><img src="assets/images/logo.png" alt="Plante Moran" class="img-fluid"></a>
+                    <h3>Plante Moran</h3>
+                    <p>Plante Moran is now the 11th largest public accounting firm...</p>
+                    <a href="#" class="learn-more">Learn More</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row d-flex">
@@ -108,9 +110,7 @@
                 </div>
                 <div class="col-1">
                     <h4>Contact Us</h4>
-                    <p>Koelbel Building <br>
-                        Leeds School of Business <br>
-                        995 Regent Dr, Boulder, CO <br> 80309</p>
+                    <p>Koelbel Building <br> Leeds School of Business <br> 995 Regent Dr, Boulder, CO <br> 80309</p>
                     <a href="mailto:akpsi@colorado.edu">akpsi@colorado.edu</a>
                 </div>
                 <div class="col-1">
@@ -125,30 +125,9 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
-
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- Initialize Swiper -->
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            spaceBetween: 10,
-            slidesPerView: 4,
-            freeMode: true,
-            watchSlidesProgress: true,
-        });
-        var swiper2 = new Swiper(".mySwiper2", {
-            spaceBetween: 10,
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            thumbs: {
-                swiper: swiper,
-            },
-        });
-    </script>
 </body>
-
 </html>
