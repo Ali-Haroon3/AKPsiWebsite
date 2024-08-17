@@ -1517,3 +1517,21 @@ footer p {
     align-items: center;
     padding: 15px; /* Add padding for spacing between columns */
 }
+.legacy-page .img-square {
+    width: 100%;
+    max-width: 120px; /* Controls the size of the square */
+    padding-bottom: 120px; /* Maintains the square aspect ratio */
+    background-color: #f0f0f0; /* Placeholder background color */
+    background-size: contain; /* Ensures the entire image fits within the square */
+    background-repeat: no-repeat; /* Prevents repeating if the image is smaller than the container */
+    background-position: center; /* Centers the image within the square */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    margin: 0 auto; /* Center the square */
+}
+
+@media (max-width: 576px) {
+    .legacy-page .img-square {
+        max-width: 80px; /* Smaller square size for mobile devices */
+        padding-bottom: 80px; /* Ensure it remains a square on smaller screens */
+    }
+}
