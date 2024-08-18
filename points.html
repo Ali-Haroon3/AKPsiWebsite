@@ -18,6 +18,49 @@
   <link href="/assets/img/favicon.png" rel="icon">
   <script src="jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .points-outline {
+      border: 2px solid #000; /* Larger border size */
+      padding: 20px;
+      margin-right: 15px; /* Ensure equal spacing between tables */
+    }
+
+    .points-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .points-row .points-outline:last-child {
+      margin-right: 0;
+    }
+
+    .table-bordered th {
+      background-color: #063060;
+      color: white;
+      font-size: 16px; /* Ensure the font size isn’t too large */
+    }
+
+    .sobro-table {
+      height: 66%; /* Adjust the height of the So-Bros table */
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .points-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-info {
+      margin-top: 50px; /* Moves the profile info down slightly */
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body class="is-preload">
@@ -32,6 +75,11 @@
       <a class="nav-link1" href="points.html">Points</a>
       <a class="nav-link2" href="calendar.html">Calendar</a>
       <a class="nav-link3" href="portal.html">Logout</a>
+    </section>
+
+    <section class="profile-info">
+      <h1 id="profile-fullname">Full Name</h1>
+      <p id="profile-year">Year</p>
     </section>
 
     <section class="points-content">
@@ -55,13 +103,64 @@
             <input class="points-button" type="submit" value="Save Changes">
           </form>
         </div>
-        <div class="points-profile">
-          <img class="profile" id="profile-picture" src="placeholder.png" alt="Profile Picture">
-          <h1 id="profile-fullname">Full Name</h1>
-          <p id="profile-year">Year</p>
+
+        <div class="points-outline">
+          <h>Brother Interviews</h>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>2024-08-01</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>2024-08-02</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>Chris Johnson</td>
+                <td>2024-08-03</td>
+                <td>5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="points-outline sobro-table">
+          <h>So-Bros</h>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Task</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Michael Brown</td>
+                <td>Drive to event</td>
+                <td>Completed</td>
+              </tr>
+              <tr>
+                <td>Samantha Green</td>
+                <td>Setup event</td>
+                <td>In Progress</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="points-row">
+      
+      <div class="points-center">
         <div class="points-outline stats">
           <div class="stats-row">
             <div class="points-table-row">
@@ -73,68 +172,11 @@
           </div>
           <div class="stats-row">
             <canvas id="pointsChart" width="400" height="400"></canvas>
-            <div class="points-table">
-              <div class="points-table-row">
-                <p>Category</p>
-                <p>Pts. Earned</p>
-              </div>
-              <div class="points-table-row">
-                <p>Brother Interviews</p>
-                <p id="bi-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Rush Attendance</p>
-                <p id="ra-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Chapter Attendance</p>
-                <p id="ca-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Domingo Attendance</p>
-                <p id="da-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Interview Participation</p>
-                <p id="ip-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>BUSIK Letters</p>
-                <p id="bl-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Sobro</p>
-                <p id="s-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Form Completions</p>
-                <p id="fc-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Extra Category 1</p>
-                <p id="ec1-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Extra Category 2</p>
-                <p id="ec2-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Extra Category 3</p>
-                <p id="ec3-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Extra Category 4</p>
-                <p id="ec4-points">0</p>
-              </div>
-              <div class="points-table-row">
-                <p>Extra Category 5</p>
-                <p id="ec5-points">0</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </section>
+    
     <section class="points-footer">
       <div class="points-footer-content">
         <p class="footer-credits">Designed by Ali Haroon <br> &copy; 2024 Alpha Kappa Psi</h>

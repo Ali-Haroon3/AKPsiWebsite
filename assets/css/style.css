@@ -1535,3 +1535,21 @@ footer p {
         padding-bottom: 80px; /* Ensure it remains a square on smaller screens */
     }
 }
+.legacy-page h2.text-center {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.legacy-page .alumni-companies h2 {
+    text-align: center;
+}
+
+.legacy-page .alumni-spotlight h2 {
+    text-align: center;
+}
+.legacy-page .alumni-header {
+    margin-top: 70px; /* Moves the header down */
+    font-size: 36px; /* Makes the header much bigger */
+    text-align: center;
+}

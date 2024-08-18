@@ -4,51 +4,85 @@ document.addEventListener('DOMContentLoaded', function() {
       type: 'pie',
       data: {
         labels: [
+          'Alumni Tailgate', 
+          'Assiting with interviews', 
+          'Big Brother Mentor', 
           'Brother Interviews', 
-          'Rush Attendance', 
-          'Chapter Attendance', 
-          'Domingo Attendance', 
-          'Interview Participation', 
           'BUSIK Letters', 
-          'Sobro', 
+          'Chapter Attendance', 
+          'Domingos', 
+          'Exec Member', 
+          'Family Hangouts', 
+          'Family Head', 
           'Form Completions', 
-          'Extra Category 1', 
-          'Extra Category 2', 
-          'Extra Category 3', 
-          'Extra Category 4', 
-          'Extra Category 5'
+          'Forms', 
+          'Hosting Family Initiation', 
+          'Hosting Official Initiation', 
+          'Initiation So-Bro', 
+          'Perfect Attendance', 
+          'Professional Headshot', 
+          'Recruitment Tabling', 
+          'Rush Attendance', 
+          'Service Event Attendance', 
+          'Sobro', 
+          'So-Bro Driving', 
+          'Wellness Week', 
+          'Zeta Chats'
+          
         ],
         datasets: [{
           label: 'Points Distribution',
           data: [
-            0, // Brother Interviews
-            0, // Rush Attendance
-            0, // Chapter Attendance
-            0, // Domingo Attendance
-            0, // Interview Participation
-            0, // BUSIK Letters
-            0, // Sobro
-            0, // Form Completions
-            0, // Extra Category 1
-            0, // Extra Category 2
-            0, // Extra Category 3
-            0, // Extra Category 4
-            0  // Extra Category 5
+            1, // Alumni Tailgate
+            1, // Assiting with interviews
+            1, // Big Brother Mentor
+            1, // Brother Interviews
+            1, // BUSIK Letters
+            1, // Chapter Attendance
+            1, // Domingos
+            1, // Exec Member
+            1, // Family Hangouts
+            1, // Family Head
+            1, // Form Completions
+            1, // Forms
+            1, // Hosting Family Initiation
+            1, // Hosting Official Initiation
+            1, // Initiation So-Bro
+            1, // Perfect Attendance
+            1, // Professional Headshot
+            1, // Recruitment Tabling
+            1, // Rush Attendance
+            1, // Service Event Attendance
+            1, // Sobro
+            1, // So-Bro Driving
+            1, // Wellness Week
+            1  // Zeta Chats
           ],
           backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#FF6384'
+            '#FF6384', // Alumni Tailgate
+            '#36A2EB', // Assiting with interviews
+            '#FFCE56', // Big Brother Mentor
+            '#4BC0C0', // Brother Interviews
+            '#9966FF', // BUSIK Letters
+            '#FF9F40', // Chapter Attendance
+            '#C9CBCF', // Domingos
+            '#E7E9ED', // Exec Member
+            '#B3B3CC', // Family Hangouts
+            '#8AD7E4', // Family Head
+            '#FFA07A', // Form Completions
+            '#D2B48C', // Forms
+            '#98FB98', // Hosting Family Initiation
+            '#AFEEEE', // Hosting Official Initiation
+            '#9370DB', // Initiation So-Bro
+            '#FFD700', // Perfect Attendance
+            '#FF6347', // Professional Headshot
+            '#6B8E23', // Recruitment Tabling
+            '#D2691E', // Rush Attendance
+            '#BC8F8F', // Service Event Attendance
+            '#66CDAA', // Sobro
+            '#8FBC8F', // So-Bro Driving
+            '#48D1CC', // Wellness Week
+            '#C71585'  // Zeta Chats
           ]
         }]
       },
@@ -68,21 +102,33 @@ document.addEventListener('DOMContentLoaded', function() {
       total_points: 50,
       needed_points: 52,
       points: {
-        bi: 10,
-        ra: 5,
-        ca: 10,
-        da: 5,
-        ip: 5,
-        bl: 3,
-        s: 3,
-        fc: 4,
-        ec1: 2,
-        ec2: 1,
-        ec3: 1,
-        ec4: 1,
-        ec5: 0
+        alumniTailgate: 10,
+        assistingWithInterviews: 5,
+        bigBrotherMentor: 10,
+        brotherInterviews: 5,
+        busikLetters: 5,
+        chapterAttendance: 3,
+        domingos: 3,
+        execMember: 4,
+        familyHangouts: 2,
+        familyHead: 1,
+        formCompletions: 1,
+        forms: 1,
+        hostingFamilyInitiation: 1,
+        hostingOfficialInitiation: 1,
+        initiationSoBro: 0,
+        perfectAttendance: 3,
+        professionalHeadshot: 2,
+        recruitmentTabling: 1,
+        rushAttendance: 1,
+        serviceEventAttendance: 1,
+        sobro: 1,
+        soBroDriving: 0,
+        wellnessWeek: 1,
+        zetaChats: 1
       }
     };
+    
   
     // Update profile information
     document.getElementById('ffirstname').value = mockData.firstname;
@@ -112,20 +158,32 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Update chart data
     pointsChart.data.datasets[0].data = [
-      mockData.points.bi,
-      mockData.points.ra,
-      mockData.points.ca,
-      mockData.points.da,
-      mockData.points.ip,
-      mockData.points.bl,
-      mockData.points.s,
-      mockData.points.fc,
-      mockData.points.ec1,
-      mockData.points.ec2,
-      mockData.points.ec3,
-      mockData.points.ec4,
-      mockData.points.ec5
+      mockData.points.alumniTailgate,
+      mockData.points.assistingWithInterviews,
+      mockData.points.bigBrotherMentor,
+      mockData.points.brotherInterviews,
+      mockData.points.busikLetters,
+      mockData.points.chapterAttendance,
+      mockData.points.domingos,
+      mockData.points.execMember,
+      mockData.points.familyHangouts,
+      mockData.points.familyHead,
+      mockData.points.formCompletions,
+      mockData.points.forms,
+      mockData.points.hostingFamilyInitiation,
+      mockData.points.hostingOfficialInitiation,
+      mockData.points.initiationSoBro,
+      mockData.points.perfectAttendance,
+      mockData.points.professionalHeadshot,
+      mockData.points.recruitmentTabling,
+      mockData.points.rushAttendance,
+      mockData.points.serviceEventAttendance,
+      mockData.points.sobro,
+      mockData.points.soBroDriving,
+      mockData.points.wellnessWeek,
+      mockData.points.zetaChats
     ];
     pointsChart.update();
+    
   });
   

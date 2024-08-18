@@ -32,13 +32,99 @@
     </section>
 
     <section class="calendar-body">
-      <div id="calendar"></div>
+      <div class="no-events">
+        <h>There are no events scheduled rn :( <br> Check back soon for any updates!</h>
+      </div>
     </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Mock fetching an array of JSON file names
+        simulateFetchJsonFiles().then(jsonFiles => {
+          jsonFiles.forEach(file => {
+            fetch(file)
+              .then(response => response.json())
+              .then(data => {
+                document.querySelector('.calendar-body').appendChild(createCalendarEvent(data));
+              })
+              .catch(error => console.error('Error loading the JSON file:', error));
+          });
+        });
+
+        // Extended Test Case with sorting: Load multiple known events to test the creation function
+        const testData = [
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          },
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          },
+          {
+            "month": "August",
+            "date": "27",
+            "type": "Chapter",
+            "title": "Chapter 1",
+            "time": "6:30 pm"
+          }
+        ];
+
+        // Sort events by month and date
+        testData.sort((a, b) => {
+          return (a.month + a.date) < (b.month + b.date) ? 1 : -1;
+        });
+
+        // Process each test event
+        testData.forEach(event => {
+          document.querySelector('.calendar-body').appendChild(createCalendarEvent(event));
+        });
+      });
+
+      function createCalendarEvent(data) {
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'calendar-event';
+
+        const eventLeft = document.createElement('div');
+        eventLeft.className = 'event-left';
+        eventLeft.innerHTML = `<h class="month">${data.month}</h><h class="date">${data.date}</h>`;
+
+        const eventRight = document.createElement('div');
+        eventRight.className = 'event-right';
+        eventRight.innerHTML = `
+                    <p class="type">${data.type}</p>
+                    <h class="title">${data.title}</h>
+                    <div class="time">
+                        <ion-icon class="idfk" name="time"></ion-icon>
+                        <p class="hour">${data.time}</p>
+                    </div>`;
+
+        eventDiv.appendChild(eventLeft);
+        eventDiv.appendChild(eventRight);
+
+        return eventDiv;
+      }
+
+      function simulateFetchJsonFiles() {
+        return new Promise(resolve => {
+          // Simulate an async task where you fetch JSON file names
+          setTimeout(() => {
+            resolve(['data1.json', 'data2.json', 'data3.json']);  // Simulate file names
+          }, 1000);
+        });
+      }
+    </script>
 
     <section class="points-footer calendar">
       <div class="points-footer-content">
-        <p class="footer-credits">Designed by William van Vuuren, Cole Younoszai, Ali Haroon <br> &copy; 2024 Alpha Kappa Psi</p>
-        <p class="footer-links">For more details on events and requirements: <a class="footer" href="https://apple.com">see here</a></p>
+        <p class="footer-credits">Designed by William van Vuuren, Cole Younoszai, Ali Haroon <br> &copy; 2024 Alpha Kappa Psi</h>
+        <p class="footer-links">For more details on events and requirements: <a class="footer" href="https://apple.com">see here</a></h>
       </div>
     </section>
   </div>
@@ -57,90 +143,6 @@
     <script src="assets/js/wow.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const calendarDiv = document.getElementById('calendar');
-
-        // Define days of the week
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-        // Define number of days in September
-        const daysInMonth = 30;
-
-        // Add day headers
-        const dayHeaderRow = document.createElement('div');
-        dayHeaderRow.className = 'day-header-row';
-        daysOfWeek.forEach(day => {
-          const dayHeader = document.createElement('div');
-          dayHeader.className = 'day-header';
-          dayHeader.textContent = day;
-          dayHeaderRow.appendChild(dayHeader);
-        });
-        calendarDiv.appendChild(dayHeaderRow);
-
-        // Create calendar grid
-        let dayOfWeek = 0;
-        for (let day = 1; day <= daysInMonth; day++) {
-          const dayCell = document.createElement('div');
-          dayCell.className = 'day-cell';
-
-          // Add event on September 15th as an example
-          if (day === 15) {
-            const event = document.createElement('div');
-            event.className = 'calendar-event';
-            event.innerHTML = `
-              <h class="title">Chapter Meeting</h>
-              <div class="time">
-                  <ion-icon class="idfk" name="time"></ion-icon>
-                  <p class="hour">6:30 pm</p>
-              </div>`;
-            dayCell.appendChild(event);
-          }
-
-          dayCell.textContent = day;
-          calendarDiv.appendChild(dayCell);
-          dayOfWeek++;
-
-          // Start a new row for each week
-          if (dayOfWeek === 7) {
-            dayOfWeek = 0;
-            calendarDiv.appendChild(document.createElement('div')).className = 'clear';
-          }
-        }
-      });
-    </script>
-
-    <style>
-      #calendar {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 600px;
-        margin: auto;
-      }
-
-      .day-header-row,
-      .day-cell {
-        width: calc(100% / 7);
-        text-align: center;
-        padding: 10px;
-        box-sizing: border-box;
-      }
-
-      .day-header {
-        font-weight: bold;
-      }
-
-      .calendar-event {
-        margin-top: 10px;
-        padding: 5px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-      }
-
-      .clear {
-        clear: both;
-      }
-    </style>
   </div>
 </body>
 
