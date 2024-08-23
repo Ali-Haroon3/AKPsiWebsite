@@ -1580,17 +1580,52 @@ footer p {
     justify-content: center;
     align-items: center;
 }
-.swiper-slide,
-.swiper-slide-active {
+.history .swiper-slide,
+.history .swiper-slide-active {
     width: 100%;
     height: auto;
     object-fit: cover; /* Maintain aspect ratio and fill the container */
     max-height: 400px; /* Adjust max-height as needed */
 }
 
-.swiper-slide.swiper-slide-active img {
+.history .swiper-slide.swiper-slide-active img {
     width: 100%;
     height: auto;
     object-fit: cover;
     max-height: 400px;
+}
+.leadership-page .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+}
+
+.leadership-page .full-width {
+    grid-column: span 3;
+    text-align: center;
+}
+
+.leadership-page .vp-suite-grid {
+    margin-bottom: 50px; /* Adjust for spacing between VP Suite and Executive Board */
+}
+
+.leadership-page .spacing {
+    height: 50px; /* Adjust for desired spacing */
+}
+
+.leadership-page .exec-board-grid {
+    margin-top: 50px;
+    grid-template-columns: repeat(3, 1fr); /* Maintain three columns for the first two rows */
+}
+
+.leadership-page .exec-board-grid .team-member:nth-last-child(2),
+.leadership-page .exec-board-grid .team-member:nth-last-child(1) {
+    grid-column: span 1;
+    margin-left: 0px; /* Adjust this value to move the last two members slightly left */
+}
+
+.leadership-page .exec-board-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* Ensures three columns layout */
+    justify-items: center; /* Center items within each grid cell */
 }

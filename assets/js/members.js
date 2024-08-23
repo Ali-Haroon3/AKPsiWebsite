@@ -32,7 +32,7 @@ fetch('/assets/members.json')
           html += `<img src="${members[i].image}" alt="${members[i].name}">
           <div class="icons">`;
       } else {
-          html += `<img src="images/headshots/empty_headshot.webp" alt="${members[i].name}">
+          html += `<img src="images/member_headshots/placeholder.png" alt="${members[i].name}">
           <div class="icons">`;
       }
 
@@ -64,7 +64,6 @@ fetch('/assets/members.json')
     // Add the generated HTML to the document
     document.getElementById('members').innerHTML = html;
   });
-
 
 
 
