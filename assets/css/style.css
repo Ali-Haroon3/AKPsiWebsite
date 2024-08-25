@@ -390,6 +390,11 @@ header ul li a {
     width: 100%;
 }
 
+.swiper-slide.bg-img2 {
+    background: url(assets/images/SponsorshipImage.jpg) no-repeat center center/cover;
+    width: 100%;
+}
+
 .swiper-slide .col-1 {
     position: relative;
     height: 100vh;
