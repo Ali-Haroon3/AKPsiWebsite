@@ -1634,3 +1634,32 @@ footer p {
     grid-template-columns: 1fr 1fr 1fr; /* Ensures three columns layout */
     justify-items: center; /* Center items within each grid cell */
 }
+
+/* Specific styles for the Shaz and Anna row, and Mackenzie and Jaque row */
+.leadership-page .shaz-anna-row,
+.leadership-page .mackenzie-jaque-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 5px; /* Significantly smaller gap between images */
+    justify-content: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .leadership-page .team-grid,
+    .leadership-page .vp-suite-grid,
+    .leadership-page .exec-board-grid,
+    .leadership-page .shaz-anna-row,
+    .leadership-page .mackenzie-jaque-row {
+        grid-template-columns: 1fr 1fr; /* Two items per row on small screens */
+        gap: 10px; /* Reduce gap for smaller screens */
+        justify-content: center;
+    }
+    
+    .leadership-page .big-circle img {
+        width: 100%; /* Adjust the big circle image to fit within mobile screens */
+        height: auto; /* Maintain aspect ratio */
+        margin: 0 auto;
+        display: block;
+    }
+}
