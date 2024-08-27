@@ -1646,7 +1646,8 @@ footer p {
 }
 
 /* Mobile responsiveness */
-@media (max-width: 600px) {
+/* Mobile responsiveness */
+@media (max-width: 768px) {
     .leadership-page .team-grid,
     .leadership-page .vp-suite-grid,
     .leadership-page .exec-board-grid,
@@ -1657,10 +1658,17 @@ footer p {
         justify-content: center;
     }
     
+    .leadership-page .big-circle {
+        width: 300px; /* Reduce size for mobile */
+        height: 300px; /* Maintain aspect ratio */
+    }
+
     .leadership-page .big-circle img {
         width: 100%; /* Adjust the big circle image to fit within mobile screens */
-        height: auto; /* Maintain aspect ratio */
+        height: 100%;
+        object-fit: cover;
         margin: 0 auto;
         display: block;
     }
 }
+
