@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
       data: {
         labels: [
           'Alumni Tailgate', 
-          'Assiting with interviews', 
+          'Assisting with interviews', 
           'Big Brother Mentor', 
           'Brother Interviews', 
           'BUSIK Letters', 

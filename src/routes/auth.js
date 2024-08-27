@@ -63,7 +63,7 @@ router.post('/login', (req, res) => {
 
         const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: 86400 });
         res.cookie('token', token, { httpOnly: true });
-        res.redirect('/points.html');
+        res.redirect('portal/points.html');
     });
 });
 
