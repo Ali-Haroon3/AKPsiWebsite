@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ALPHA KAPPA PSI</title>
+    <!-- link for css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- link for font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <!-- code for header -->
+    <header>
+        <div class="container-fluid">
+            <div class="row d-flex align-center justify-between">
+                <div class="box">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/logo.png" alt="ALPHA KAPPA PSI" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+                <div class="box mobile">
+                    <ul class="d-flex align-center">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="portal.html">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="box pc">
+                    <!-- The overlay -->
+                    <div id="myNav" class="overlay">
+
+                        <!-- Button to close the overlay navigation -->
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+                        <!-- Overlay content -->
+                        <div class="overlay-content">
+                            <a href="index.html">Home</a>
+                            <a href="about.html">About us</a>
+                            <a href="recruitment.html">Recruitment</a>
+                            <a href ="leadership.html">Leadership</a>
+                            <a href="legacy.html">Legacy</a>
+                            <a href="contact.html">Contact</a>
+                            <a href="portal.html">Member Portal</a>
+                        </div>
+
+                    </div>
+
+                    <!-- Use any element to open/show the overlay navigation menu -->
+                    <span onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="demo-modal" class="modal">
+        <div class="modal__content">
+            <div class="row d-flex">
+                <div class="col-1">
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="" class="img-fluid">
+                    </a>
+                    <h2>Register for the AK Psi Member Portal</h2>
+                    <p>Please register an account with your identikey as the username and an @colorado.edu email address</p>
+                    <form id="registerForm" action="/auth/register" method="post">
+                        <div class="box">
+                            <label>First Name</label> <br>
+                            <input type="text" name="firstname" placeholder="John" required>
+                        </div>
+                        <div class="box">
+                            <label>Last Name</label> <br>
+                            <input type="text" name="lastname" placeholder="Doe" required>
+                        </div>
+                        <div class="box">
+                            <label>Identikey</label> <br>
+                            <input type="text" name="identikey" placeholder="abcd1234" pattern="^[A-Za-z]{4}\d{4}$" required>
+                        </div>
+                        <div class="box">
+                            <label>Email</label> <br>
+                            <input type="email" name="email" placeholder="example@colorado.edu" required>
+                        </div>
+                        <div class="box">
+                            <label>Password</label> <br>
+                            <input type="password" id="fpassword" name="password" placeholder="Password123" onkeyup='check();' required>
+                        </div>
+                        <div class="box">
+                            <label>Confirm Password <span id='message'></span></label> <br>
+                            <input type="password" id="fconfirmpassword" name="confirmPassword" placeholder="Password123" onkeyup='check();' required>
+                        </div>
+                        <input type="submit" value="Register" class="btn-sign-in" style="margin-left: -20px;">
+                        <p id="error-message" style="color: red;"></p>
+                    </form>
+                    <p class="bottom-para">Already have an account? <a href="/portal.html">Sign In</a></p>
+                </div>
+                <div class="col-1 main-img">
+                    <img src="assets/images/sigin-img.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-1">
+                    <h4>Browse</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="legacy.html">Legacy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="portal.html">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-1">
+                    <h4>Contact Us</h4>
+                    <p>Koelbel Building <br>
+                        Leeds School of Business <br>
+                        995 Regent Dr, Boulder, CO <br> 80309</p>
+                    <a href="mailto:akpsi@colorado.edu">akpsi@colorado.edu</a>
+                </div>
+                <div class="col-1">
+                    <h4>Keep in touch</h4>
+                    <div class="icons d-flex align-center">
+                        <a href="https://www.instagram.com/akpsiboulder/"><i class="fa-brands fa-instagram"></i></a>
+                        <!-- <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a> -->
+                        <a href="mailto:akpsigrush@gmail.com"><i class="fa-solid fa-envelope-open"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        var check = function() {
+            if (document.getElementById('fpassword').value == document.getElementById('fconfirmpassword').value && document.getElementById('fpassword').value != null) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'matching';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'not matching';
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = {
+                firstname: form.firstname.value,
+                lastname: form.lastname.value,
+                identikey: form.identikey.value,
+                email: form.email.value,
+                password: form.password.value
+            };
+
+            console.log('Form Data:', formData); // Debugging: Log form data
+
+            fetch(form.action, {
+                method: form.method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            }).then(function(response) {
+                if (response.ok) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json().then(function(data) {
+                        document.getElementById('error-message').innerText = data.message;
+                        document.querySelector('.btn-sign-in').disabled = true;
+                    });
+                }
+            }).catch(function(error) {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+
+</html>
