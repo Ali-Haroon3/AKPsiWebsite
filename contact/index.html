@@ -146,7 +146,7 @@
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <!-- Bootstrap-enhanced Contact Form -->
-                    <form action="https://formspree.io/f/mkgwkldo" method="POST">
+                    <form id="contactForm" action="https://formspree.io/f/mkgwkldo" method="POST" onsubmit="submitForm(event)">
                         <div class="form-group">
                             <label for="firstName">Name <span class="required">(required)</span></label>
                             <div class="d-flex">
@@ -168,8 +168,6 @@
                         </div>
                         <button type="submit" class="btn">Submit</button>
                     </form>
-                    
-                    
                 </div>
                 <div class="col-lg-6">
                     <!-- Contact Information and Pinned Google Map -->
@@ -232,25 +230,50 @@
 
     <script src="/assets/js/script.js"></script>
 
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      freeMode: true,
-      watchSlidesProgress: true,
-    });
-    var swiper2 = new Swiper(".mySwiper2", {
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      thumbs: {
-        swiper: swiper,
-      },
-    });
-  </script>
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Send the form data using fetch
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // Redirect to the contact page after successful submission
+                    window.location.href = "/contact.html";
+                } else {
+                    alert("There was an issue with your submission. Please try again.");
+                }
+            }).catch(error => {
+                alert("There was an error submitting the form. Please try again.");
+            });
+        }
+    </script>
 </body>
 
 </html>
