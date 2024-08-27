@@ -208,7 +208,16 @@ header ul li a {
     height: 100vh;
 
 }
-
+.legacy-page .hero-section
+{
+    background: url(../images/SponsorshipImage.jpg) no-repeat center center/cover;
+    height: 100vh;
+}
+.contact-page .hero-section
+{
+    background: url(/images/BrotherhoodImage2.jpg) no-repeat center center/cover;
+    height: 100vh;
+}
 .recruitment .hero-section .col-1 h2 {
     color: rgba(255, 255, 255, 1.00);
     font-size: 110px;
@@ -222,7 +231,6 @@ header ul li a {
 .about-page .hero-section .container {
     padding: 100px !important;
 }
-
 .hero-section .bg-1 {
     position: absolute;
     top: 0px;
@@ -1647,7 +1655,7 @@ footer p {
 
 /* Mobile responsiveness */
 /* Mobile responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 576) {
     .leadership-page .team-grid,
     .leadership-page .vp-suite-grid,
     .leadership-page .exec-board-grid,
