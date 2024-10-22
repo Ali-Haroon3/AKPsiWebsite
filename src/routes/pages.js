@@ -3,8 +3,7 @@ const router = express.Router();
 const path = require('path');
 const authMiddleware = require('../middleware/authMiddleware');
 
-// Adjusted paths based on your file structure
-
+// Adjust paths to match the AKPsiWebsite folder
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/index.html'));
 });
