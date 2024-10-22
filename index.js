@@ -25,8 +25,6 @@ app.use(express.static(path.join(__dirname, 'AKPsiWebsite')));
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
 
-console.log('Auth Routes:', authRoutes);
-console.log('Page Routes:', pageRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5001;
