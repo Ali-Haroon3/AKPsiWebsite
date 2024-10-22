@@ -22,12 +22,11 @@
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
     "pandas": "^0.0.3",
     "path": "^0.12.7"
   },
   "engines": {
-  "node": "18.x"
-}
-
-  
+    "node": "18.x"
+  }
 }
