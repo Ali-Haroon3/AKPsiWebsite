@@ -1,38 +1,31 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const authRoutes = require('./src/routes/auth');  // Ensure this is correct
-const pageRoutes = require('./src/routes/pages'); // Ensure this is correct
+const authRoutes = require('./src/routes/auth');
+const pageRoutes = require('./src/routes/pages');
 
 const app = express();
 
-// Use CORS to allow requests from frontend (GitHub Pages)
-app.use(
-    cors({
-        origin: 'https://ali-haroon3.github.io', // Update origin if needed
-        credentials: true, // Allow credentials (cookies) to be sent
-    })
-);
+// CORS setup for external frontend requests
+app.use(cors({
+    origin: 'https://ali-haroon3.github.io',
+    credentials: true,
+}));
 
-// Serve static files
+// Parse incoming JSON requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the AKPsiWebsite folder
 app.use(express.static(path.join(__dirname, 'AKPsiWebsite')));
 
-// Ensure that the imported routes are functions
-if (typeof authRoutes === 'function') {
-    app.use('/auth', authRoutes);
-} else {
-    console.error('authRoutes is not a valid middleware function');
-}
+// Route setup - ensure these are correct
+app.use('/auth', authRoutes);
+app.use('/', pageRoutes);
 
-if (typeof pageRoutes === 'function') {
-    app.use('/', pageRoutes);
-} else {
-    console.error('pageRoutes is not a valid middleware function');
-}
-
-// Handle preflight requests globally
+// Handle preflight requests for CORS
 app.options('*', cors());
 
-// Start the server
+// Start the server on the specified port
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
