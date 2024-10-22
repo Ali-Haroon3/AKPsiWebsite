@@ -3,7 +3,7 @@ import mysql.connector
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables from .env
 load_dotenv()
 
 # Set paths
@@ -11,10 +11,11 @@ attendance_file = os.path.join('data', 'SECRETARY_F24_Chapter_Attendance.csv')
 
 # Connect to MySQL
 db = mysql.connector.connect(
-    host=os.getenv('MYSQL_HOST'),
-    user=os.getenv('MYSQL_USER'),
-    password=os.getenv('MYSQL_PASSWORD'),
-    database=os.getenv('MYSQL_DATABASE')
+    host=os.getenv("MYSQL_HOST"),
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PASSWORD"),
+    database=os.getenv("MYSQL_DATABASE"),
+    port=os.getenv("MYSQL_PORT")
 )
 cursor = db.cursor()
 
@@ -30,6 +31,8 @@ def process_attendance():
                 if identikey and absences is not None:
                     try:
                         absences = int(absences)
+
+                        # Update unexcused absences in the MySQL database
                         query = """
                             UPDATE users 
                             SET unexcused_absences = %s 
@@ -37,11 +40,15 @@ def process_attendance():
                         """
                         cursor.execute(query, (absences, identikey))
                         print(f"Updated {identikey} with {absences} unexcused absences.")
+
                     except ValueError:
                         print(f"Skipping invalid absence value for {identikey}")
 
         db.commit()
         print("Attendance data processed successfully.")
+
+    except FileNotFoundError:
+        print(f"File {attendance_file} not found.")
     except Exception as e:
         print(f"Error processing attendance: {e}")
     finally:
