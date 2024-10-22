@@ -1,9 +1,10 @@
+
 // const jwt = require('jsonwebtoken');
 
 // module.exports = (req, res, next) => {
 //     const token = req.cookies.token;
 //     if (!token) {
-//         return res.status(403).redirect('/login.html');
+//         return res.status(403).redirect('/portal/index.html');
 //     }
 
 //     jwt.verify(token, 'secret', (err, decoded) => {
