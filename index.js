@@ -28,23 +28,24 @@ const pageRoutes = require('./src/routes/pages');
 
 const app = express();
 
-// Use CORS to allow requests from the frontend (GitHub Pages)
+// Use CORS to allow requests from the frontend
 app.use(cors({
-    origin: 'https://ali-haroon3.github.io', // Adjust frontend origin if needed
-    credentials: true, // Allow credentials (cookies) to be sent
+    origin: 'https://ali-haroon3.github.io',
+    credentials: true,
 }));
 
-// Handle preflight requests globally to ensure CORS success
+// Handle preflight requests
 app.options('*', cors());
 
-// Serve static files from the AKPsiWebsite folder
+// Serve static files from the 'AKPsiWebsite' folder
 app.use(express.static(path.join(__dirname, 'AKPsiWebsite')));
 
-// Set up routes for authentication and pages
+// Use the routes
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
 
-// Start the server on the specified port or default to 5001
+// Start the server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
