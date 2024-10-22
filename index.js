@@ -27,6 +27,8 @@ app.use(cookieParser());
 // Routes
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
+app.use('/assets', express.static('portal/assets'));
+
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
