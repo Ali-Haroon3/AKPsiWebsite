@@ -12,15 +12,15 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/login.html'));
+    res.sendFile(path.join(__dirname, '../../portal/index.html'));
 });
 
 router.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/register.html'));
+    res.sendFile(path.join(__dirname, '../../portal/register.html'));
 });
 
 router.get('/points', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/points.html'));
+    res.sendFile(path.join(__dirname, '../../portal/points.html'));
 });
 
 router.get('/calendar', authMiddleware, (req, res) => {
@@ -44,7 +44,7 @@ router.get('/legacy', (req, res) => {
 });
 
 router.get('/portal', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/portal.html'));
+    res.sendFile(path.join(__dirname, '../../portal/index.html'));
 });
 const { exec } = require('child_process');
 
