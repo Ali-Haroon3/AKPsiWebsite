@@ -3,50 +3,50 @@ const path = require('path');
 const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
+// Serve index.html from the root
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/index.html'));
+    res.sendFile(path.join(__dirname, '../../index.html'));
 });
 
-router.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/about.html'));
-});
-
+// Portal-related pages
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/index.html'));
+    res.sendFile(path.join(__dirname, '../../portal/index.html'));
 });
 
 router.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/register.html'));
-});
-
-router.get('/points', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/points.html'));
+    res.sendFile(path.join(__dirname, '../../portal/register.html'));
 });
 
 router.get('/calendar', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/calendar.html'));
+    res.sendFile(path.join(__dirname, '../../portal/calendar.html'));
+});
+
+router.get('/points', authMiddleware, (req, res) => {
+    res.sendFile(path.join(__dirname, '../../portal/points.html'));
+});
+
+// Static pages in the 'views' directory
+router.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../views/about.html'));
 });
 
 router.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/contact.html'));
+    res.sendFile(path.join(__dirname, '../../views/contact.html'));
 });
 
 router.get('/sponsorship', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/sponsorship.html'));
+    res.sendFile(path.join(__dirname, '../../views/sponsorship.html'));
 });
 
 router.get('/leadership', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/leadership.html'));
+    res.sendFile(path.join(__dirname, '../../views/leadership.html'));
 });
 
 router.get('/legacy', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/legacy.html'));
+    res.sendFile(path.join(__dirname, '../../views/legacy.html'));
 });
 
-router.get('/portal', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/index.html'));
-});
-
+// Process attendance script
 router.get('/process-attendance', (req, res) => {
     exec('python3 AKPsiWebsite/scripts/process_attendance.py', (error, stdout, stderr) => {
         if (error) {
