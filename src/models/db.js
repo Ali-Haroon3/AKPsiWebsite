@@ -1,20 +1,16 @@
-const mysql = require('mysql');
-require('dotenv').config(); // Load environment variables from .env
-
-const db = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
+const mysql = require('mysql2');
+const connection = mysql.createConnection({
+  host: 'autorack.proxy.rlwy.net',
+  user: 'root',
+  password: 'nwgSLDCWNjHanJSFseHbCMTxZrVbyqlV',
   database: process.env.MYSQL_DATABASE,
-  port: process.env.MYSQL_PORT,
+  port: 50203,
 });
 
-db.connect((err) => {
+connection.connect((err) => {
   if (err) {
-    console.error('Database connection failed:', err.message);
-    process.exit(1);
+    console.error('Error connecting:', err.stack);
+    return;
   }
-  console.log('MySQL Connected...');
+  console.log('Connected as id ' + connection.threadId);
 });
-
-module.exports = db;
