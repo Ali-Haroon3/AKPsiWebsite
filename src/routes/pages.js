@@ -46,5 +46,21 @@ router.get('/legacy', (req, res) => {
 router.get('/portal', (req, res) => {
     res.sendFile(path.join(__dirname, '../../views/portal.html'));
 });
+const { exec } = require('child_process');
+
+router.get('/process-attendance', (req, res) => {
+    exec('python3 scripts/process_attendance.py', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return res.status(500).send('Error processing attendance');
+        }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).send('Error processing attendance');
+        }
+        console.log(`stdout: ${stdout}`);
+        res.send('Attendance processed successfully');
+    });
+});
 
 module.exports = router;

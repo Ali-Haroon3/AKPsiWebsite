@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
             1, // BUSIK Letters
             1, // Chapter Attendance
             1, // Domingos
-            1, // Exec Member
-            1, // Family Hangouts
-            1, // Family Head
+            5, // Exec Member
+            3, // Family Hangouts
+            3, // Family Head
             1, // Form Completions
             1, // Forms
             1, // Hosting Family Initiation
@@ -50,13 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
             1, // Initiation So-Bro
             1, // Perfect Attendance
             1, // Professional Headshot
-            1, // Recruitment Tabling
-            1, // Rush Attendance
+            2, // Recruitment Tabling
+            2, // Rush Attendance
             1, // Service Event Attendance
             1, // Sobro
-            1, // So-Bro Driving
+            4, // So-Bro Driving
             1, // Wellness Week
-            1  // Zeta Chats
+            2  // Zeta Chats
           ],
           backgroundColor: [
             '#FF6384', // Alumni Tailgate

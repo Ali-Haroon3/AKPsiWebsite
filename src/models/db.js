@@ -1,17 +1,19 @@
 const mysql = require('mysql');
+require('dotenv').config(); // Load environment variables
 
 const db = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'StrongPassword123!',
-    database: 'akpsi_portal'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 });
 
 db.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('MySQL Connected...');
+  if (err) {
+    console.error('Database connection failed:', err.message);
+    process.exit(1);
+  }
+  console.log('MySQL Connected...');
 });
 
 module.exports = db;
