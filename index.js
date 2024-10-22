@@ -22,16 +22,15 @@
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const authRoutes = require('./src/routes/auth');
-const pageRoutes = require('./src/routes/pages');
+const userRoutes = require('./src/routes/user');
 
 const app = express();
 
-// Enable CORS to allow GitHub Pages to make requests
+// Enable CORS to allow requests from GitHub Pages
 app.use(cors({
     origin: 'https://ali-haroon3.github.io',
     credentials: true
@@ -41,13 +40,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Serve static files correctly
-app.use(express.static(path.join(__dirname, 'portal')));
-app.use(express.static(path.join(__dirname, 'images')));
-
-// Routes
+// API Routes
 app.use('/auth', authRoutes);
-app.use('/', pageRoutes);
+app.use('/user', userRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

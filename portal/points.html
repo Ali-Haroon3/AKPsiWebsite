@@ -172,45 +172,69 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    const preferredName = sessionStorage.getItem('preferred_name');
-    const year = sessionStorage.getItem('year');
-    const unexcusedAbsences = sessionStorage.getItem('unexcusedAbsences');
-    const points = JSON.parse(sessionStorage.getItem('points'));
+//         document.addEventListener('DOMContentLoaded', function () {
+//     const preferredName = sessionStorage.getItem('preferred_name');
+//     const year = sessionStorage.getItem('year');
+//     const unexcusedAbsences = sessionStorage.getItem('unexcusedAbsences');
+//     const points = JSON.parse(sessionStorage.getItem('points'));
 
-    // Ensure preferred_name is correctly set
-    document.getElementById('profile-fullname').innerText = preferredName || 'Preferred Name';
-    document.getElementById('profile-year').innerText = year || 'Year';
-    document.getElementById('unexcused-absences-count').innerText = unexcusedAbsences || '0';
+//     // Ensure preferred_name is correctly set
+//     document.getElementById('profile-fullname').innerText = preferredName || 'Preferred Name';
+//     document.getElementById('profile-year').innerText = year || 'Year';
+//     document.getElementById('unexcused-absences-count').innerText = unexcusedAbsences || '0';
 
-    const chartData = [
-        points.alumniTailgate, points.assistingWithInterviews, points.bigBrotherMentor,
-        points.brotherInterviews, points.busikLetters, points.committeeMember, points.domingos,
-        points.execMember, points.familyHangouts, points.familyHead, points.formCompletions,
-        points.hostingInitiation, points.professionalHeadshot, points.rushAttendance,
-        points.serviceEvent, points.wellnessWeek
-    ];
+//     const chartData = [
+//         points.alumniTailgate, points.assistingWithInterviews, points.bigBrotherMentor,
+//         points.brotherInterviews, points.busikLetters, points.committeeMember, points.domingos,
+//         points.execMember, points.familyHangouts, points.familyHead, points.formCompletions,
+//         points.hostingInitiation, points.professionalHeadshot, points.rushAttendance,
+//         points.serviceEvent, points.wellnessWeek
+//     ];
 
-    const ctx = document.getElementById('pointsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: [
-                'Alumni Tailgate', 'Assisting with Interviews', 'Big Brother Mentor',
-                'Brother Interviews', 'BUSIK Letters', 'Committee Member', 'Domingos',
-                'Exec Member', 'Family Hangouts', 'Family Head', 'Form Completions',
-                'Hosting Initiation', 'Professional Headshot', 'Rush Attendance',
-                'Service Event', 'Wellness Week'
-            ],
-            datasets: [{
-                data: chartData,
-                backgroundColor: Array(16).fill().map(() =>
-                    `#${Math.floor(Math.random() * 16777215).toString(16)}`
-                )
-            }]
-        }
-    });
+//     const ctx = document.getElementById('pointsChart').getContext('2d');
+//     new Chart(ctx, {
+//         type: 'pie',
+//         data: {
+//             labels: [
+//                 'Alumni Tailgate', 'Assisting with Interviews', 'Big Brother Mentor',
+//                 'Brother Interviews', 'BUSIK Letters', 'Committee Member', 'Domingos',
+//                 'Exec Member', 'Family Hangouts', 'Family Head', 'Form Completions',
+//                 'Hosting Initiation', 'Professional Headshot', 'Rush Attendance',
+//                 'Service Event', 'Wellness Week'
+//             ],
+//             datasets: [{
+//                 data: chartData,
+//                 backgroundColor: Array(16).fill().map(() =>
+//                     `#${Math.floor(Math.random() * 16777215).toString(16)}`
+//                 )
+//             }]
+//         }
+//     });
+// });
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('https://akpsi-portal-8b825ba31535.herokuapp.com/user/auth/user', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(user => {
+        document.getElementById('profile-fullname').innerText = user.firstname + ' ' + user.lastname;
+        document.getElementById('profile-year').innerText = user.year;
+        document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences;
+
+        const chartData = Object.values(user.points);
+        const ctx = document.getElementById('pointsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(user.points),
+                datasets: [{ data: chartData }]
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching user data:', error));
 });
+
 
     </script>
 </body>
