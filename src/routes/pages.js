@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');  // Check the path is correct
 
 // Adjust paths to match the AKPsiWebsite folder
 router.get('/', (req, res) => {
@@ -25,7 +25,7 @@ router.get('/points', authMiddleware, (req, res) => {
 });
 
 router.get('/calendar', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/calendar.html'));
+    res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/calendar.html'));
 });
 
 router.get('/contact', (req, res) => {
