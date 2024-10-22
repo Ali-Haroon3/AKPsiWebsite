@@ -1,31 +1,30 @@
 const express = require('express');
-const path = require('path');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRoutes = require('./src/routes/auth');
 const pageRoutes = require('./src/routes/pages');
 
 const app = express();
+const PORT = process.env.PORT || 5001;
 
-// Use JSON parsing and cookie handling middleware
+// Apply CORS (Update the origin to your frontend URL)
+app.use(
+  cors({
+    origin: 'https://ali-haroon3.github.io', // Replace with your frontend's URL
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+  })
+);
+app.options('*', cors()); // Handle preflight requests
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-// CORS for frontend requests
-app.use(cors({
-    origin: 'https://ali-haroon3.github.io',
-    credentials: true,
-}));
-
-// Static files from AKPsiWebsite
-app.use(express.static(path.join(__dirname, 'AKPsiWebsite')));
-
-// Route setup
+// Routes
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
 
-
 // Start the server
-const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

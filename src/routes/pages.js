@@ -1,9 +1,8 @@
 const express = require('express');
-const router = express.Router();
 const path = require('path');
-const authMiddleware = require('../middleware/authMiddleware');  // Check the path is correct
+const authMiddleware = require('../middleware/authMiddleware');
+const router = express.Router();
 
-// Adjust paths to match the AKPsiWebsite folder
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../AKPsiWebsite/views/index.html'));
 });
@@ -48,19 +47,12 @@ router.get('/portal', (req, res) => {
     res.sendFile(path.join(__dirname, '../../AKPsiWebsite/portal/index.html'));
 });
 
-const { exec } = require('child_process');
-
 router.get('/process-attendance', (req, res) => {
     exec('python3 AKPsiWebsite/scripts/process_attendance.py', (error, stdout, stderr) => {
         if (error) {
-            console.error(`Error: ${error.message}`);
+            console.error('Process attendance error:', error);
             return res.status(500).send('Error processing attendance');
         }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return res.status(500).send('Error processing attendance');
-        }
-        console.log(`stdout: ${stdout}`);
         res.send('Attendance processed successfully');
     });
 });
