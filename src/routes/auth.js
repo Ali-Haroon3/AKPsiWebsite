@@ -145,17 +145,18 @@ router.post('/login', async (req, res) => {
 
             const user = results[0];
             const isPasswordValid = await bcrypt.compare(password, user.hashed_password);
+
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
 
-            // Generate a JWT token for the session
+            // Generate a JWT token
             const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1h' });
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' });
 
             console.log('Login successful!');
 
-            // Send the user data to be displayed on the frontend
+            // Send user data and redirect information
             res.json({
                 redirectUrl: './points.html',
                 user: {
@@ -195,37 +196,24 @@ router.post('/register', async (req, res) => {
     const { firstname, lastname, identikey, email, password } = req.body;
 
     try {
-        console.log(`Received identikey: ${identikey}`);
-
-        // Check if the user exists with this identikey
         const query = 'SELECT * FROM users WHERE identikey = ?';
-        console.log('Executing query:', query, [identikey]);
-
         db.query(query, [identikey], async (err, results) => {
             if (err) {
                 console.error('Database error:', err);
                 return res.status(500).json({ message: 'Internal Server Error' });
             }
 
-            console.log('Raw Query Results:', results);
-
             if (results.length === 0) {
-                console.warn('Identikey not found in the database.');
                 return res.status(400).json({ message: 'Identikey not found. Please contact admin.' });
             }
 
-            console.log(`Identikey found: ${results[0].identikey}`);
-
-            // Hash the password for secure storage
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Update user information in the database
             const updateQuery = `
                 UPDATE users 
                 SET firstname = ?, lastname = ?, email = ?, hashed_password = ? 
                 WHERE identikey = ?
             `;
-            console.log('Executing update query:', updateQuery);
 
             db.query(
                 updateQuery,
@@ -247,7 +235,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Logout route to clear the session
+// Logout route
 router.post('/logout', (req, res) => {
     res.clearCookie('token');
     console.log('User logged out successfully.');
