@@ -7,15 +7,17 @@ const pageRoutes = require('./src/routes/pages');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Apply CORS (Update the origin to your frontend URL)
+// Apply CORS with your frontend URL
 app.use(
   cors({
-    origin: 'https://ali-haroon3.github.io', // Replace with your frontend's URL
+    origin: 'https://akpsigz.com/', // Replace with your frontend URL
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
   })
 );
-app.options('*', cors()); // Handle preflight requests
+
+// Handle preflight requests
+app.options('*', cors()); 
 
 // Middleware
 app.use(express.json());
