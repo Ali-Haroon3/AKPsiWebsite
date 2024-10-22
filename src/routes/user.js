@@ -49,4 +49,5 @@ router.get('/auth/user', authMiddleware, (req, res) => {
     });
 });
 
+
 module.exports = router;
