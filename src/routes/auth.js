@@ -150,13 +150,18 @@ router.post('/login', async (req, res) => {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
 
-            // Generate a JWT token
             const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1h' });
-            res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' });
+
+            // Secure cookie for session management
+            res.cookie('token', token, { 
+                httpOnly: true, 
+                secure: true, 
+                sameSite: 'None' 
+            });
 
             console.log('Login successful!');
 
-            // Send user data and redirect information
+            // Send response with redirect URL and user data
             res.json({
                 redirectUrl: './points.html',
                 user: {
@@ -190,56 +195,3 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-
-// Register route
-router.post('/register', async (req, res) => {
-    const { firstname, lastname, identikey, email, password } = req.body;
-
-    try {
-        const query = 'SELECT * FROM users WHERE identikey = ?';
-        db.query(query, [identikey], async (err, results) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ message: 'Internal Server Error' });
-            }
-
-            if (results.length === 0) {
-                return res.status(400).json({ message: 'Identikey not found. Please contact admin.' });
-            }
-
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            const updateQuery = `
-                UPDATE users 
-                SET firstname = ?, lastname = ?, email = ?, hashed_password = ? 
-                WHERE identikey = ?
-            `;
-
-            db.query(
-                updateQuery,
-                [firstname, lastname, email, hashedPassword, identikey],
-                (err, updateResult) => {
-                    if (err) {
-                        console.error('Error updating user:', err);
-                        return res.status(500).json({ message: 'Internal Server Error' });
-                    }
-
-                    console.log('User successfully updated:', updateResult);
-                    res.status(200).json({ message: 'Registration successful! You can now log in.' });
-                }
-            );
-        });
-    } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-// Logout route
-router.post('/logout', (req, res) => {
-    res.clearCookie('token');
-    console.log('User logged out successfully.');
-    res.status(200).json({ message: 'Logged out successfully!' });
-});
-
-module.exports = router;
