@@ -8,13 +8,21 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Apply CORS with your frontend URL
+const allowedOrigins = ['https://akpsigz.com', 'http://localhost:3000', 'http://localhost:5001']; // Add your development URL
 app.use(
   cors({
-    origin: 'https://akpsigz.com/', // Replace with your frontend URL
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
   })
 );
+
 
 // Handle preflight requests
 app.options('*', cors()); 
@@ -27,7 +35,7 @@ app.use(cookieParser());
 // Routes
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
-app.use('/assets', express.static('portal/assets'));
+app.use('/assets', express.static('assets'));
 
 
 // Start the server
