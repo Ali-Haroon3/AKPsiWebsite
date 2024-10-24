@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRoutes = require('./src/routes/auth');
 const pageRoutes = require('./src/routes/pages');
-const path = require('path'); // Ensure this is included
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -28,6 +28,9 @@ app.use(cookieParser());
 
 // Serve static files from the 'assets' directory at the root level
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+// Serve static HTML files from the 'portal' directory
+app.use('/portal', express.static(path.join(__dirname, 'portal')));
 
 // Routes
 app.use('/auth', authRoutes);
