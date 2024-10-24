@@ -27,23 +27,23 @@ router.get('/points', authMiddleware, (req, res) => {
 
 // Static pages in the 'views' directory
 router.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/about.html'));
+    res.sendFile(path.join(__dirname, '../../about'));
 });
 
 router.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/contact.html'));
+    res.sendFile(path.join(__dirname, '../../contact'));
 });
 
 router.get('/sponsorship', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/sponsorship.html'));
+    res.sendFile(path.join(__dirname, '../../sponsorship'));
 });
 
 router.get('/leadership', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/leadership.html'));
+    res.sendFile(path.join(__dirname, '../../leadership'));
 });
 
 router.get('/legacy', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../views/legacy.html'));
+    res.sendFile(path.join(__dirname, '../../legacy'));
 });
 
 // Process attendance script

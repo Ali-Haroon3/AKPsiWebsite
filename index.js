@@ -1,42 +1,42 @@
+// index.js
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRoutes = require('./src/routes/auth');
 const pageRoutes = require('./src/routes/pages');
+const path = require('path'); // Ensure this is included
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Apply CORS with your frontend URL
-const allowedOrigins = ['https://akpsigz.com', 'http://localhost:3000', 'http://localhost:5001']; // Add your development URL
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: 'https://akpsigz.com', // Ensure no trailing slash
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
   })
 );
 
-
 // Handle preflight requests
-app.options('*', cors()); 
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Serve static files from the 'assets' directory at the root level
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 // Routes
 app.use('/auth', authRoutes);
 app.use('/', pageRoutes);
-app.use('/assets', express.static('assets'));
 
+// Handle 404 for unmatched routes
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, '404.html'));
+});
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
