@@ -179,26 +179,54 @@ router.post('/login', async (req, res) => {
 });
 
 // Register Route
+// router.post('/register', async (req, res) => {
+//     const { firstname, lastname, identikey, email, password } = req.body;
+
+//     try {
+//         const [results] = await db.query('SELECT * FROM users WHERE identikey = ?', [identikey]);
+
+//         if (results.length === 0) {
+//             // Create a new user if identikey does not exist
+//             const hashedPassword = await bcrypt.hash(password, 10);
+//             const insertQuery = `
+//                 INSERT INTO users (firstname, lastname, email, identikey, hashed_password)
+//                 VALUES (?, ?, ?, ?, ?)
+//             `;
+
+//             await db.query(insertQuery, [firstname, lastname, email, identikey, hashedPassword]);
+
+//             return res.status(201).json({ message: 'Registration successful! You can now log in.' });
+//         }
+
+//         // Update existing user if identikey exists
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const updateQuery = `
+//             UPDATE users 
+//             SET firstname = ?, lastname = ?, email = ?, hashed_password = ? 
+//             WHERE identikey = ?
+//         `;
+
+//         await db.query(updateQuery, [firstname, lastname, email, hashedPassword, identikey]);
+
+//         res.status(200).json({ message: 'Registration successful! You can now log in.' });
+//     } catch (error) {
+//         console.error('Registration error:', error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
 router.post('/register', async (req, res) => {
+    console.log('Received registration request:', req.body); // Debugging
     const { firstname, lastname, identikey, email, password } = req.body;
 
     try {
         const [results] = await db.query('SELECT * FROM users WHERE identikey = ?', [identikey]);
+        console.log('Database results:', results); // Debugging
 
         if (results.length === 0) {
-            // Create a new user if identikey does not exist
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const insertQuery = `
-                INSERT INTO users (firstname, lastname, email, identikey, hashed_password)
-                VALUES (?, ?, ?, ?, ?)
-            `;
-
-            await db.query(insertQuery, [firstname, lastname, email, identikey, hashedPassword]);
-
-            return res.status(201).json({ message: 'Registration successful! You can now log in.' });
+            console.log('Identikey not found.');
+            return res.status(400).json({ message: 'Identikey not found. Contact admin.' });
         }
 
-        // Update existing user if identikey exists
         const hashedPassword = await bcrypt.hash(password, 10);
         const updateQuery = `
             UPDATE users 
@@ -207,6 +235,7 @@ router.post('/register', async (req, res) => {
         `;
 
         await db.query(updateQuery, [firstname, lastname, email, hashedPassword, identikey]);
+        console.log('User updated successfully.'); // Debugging
 
         res.status(200).json({ message: 'Registration successful! You can now log in.' });
     } catch (error) {
