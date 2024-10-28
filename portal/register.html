@@ -119,7 +119,7 @@
         var check = function () {
             const password = document.getElementById('fpassword').value;
             const confirmPassword = document.getElementById('fconfirmpassword').value;
-
+    
             if (password === confirmPassword && password !== '') {
                 document.getElementById('message').style.color = 'green';
                 document.getElementById('message').innerText = 'Matching';
@@ -128,7 +128,7 @@
                 document.getElementById('message').innerText = 'Not matching';
             }
         };
-
+    
         document.getElementById('registerForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const form = event.target;
@@ -139,23 +139,38 @@
                 email: form.email.value,
                 password: form.password.value,
             };
-
+    
+            // Ensure password and confirmPassword match
+            const password = form.password.value;
+            const confirmPassword = form.confirmPassword.value;
+            if (password !== confirmPassword) {
+                document.getElementById('error-message').innerText = 'Passwords do not match.';
+                return;
+            }
+    
             fetch(form.action, {
                 method: form.method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.message) {
-                        document.getElementById('error-message').innerText = data.message;
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => { throw data });
                     }
-
-                    if (response.ok) {
-                        window.location.href = '/portal';
-                    }
+                    return response.json();
                 })
-                .catch((error) => console.error('Error:', error));
+                .then(data => {
+                    document.getElementById('error-message').innerText = data.message;
+                    window.location.href = '/portal';
+                })
+                .catch(error => {
+                    if (error.message) {
+                        document.getElementById('error-message').innerText = error.message;
+                    } else {
+                        console.error('Error:', error);
+                        document.getElementById('error-message').innerText = 'An error occurred. Please try again.';
+                    }
+                });
         });
     </script>
 </body>

@@ -186,9 +186,19 @@ router.post('/register', async (req, res) => {
         const [results] = await db.query('SELECT * FROM users WHERE identikey = ?', [identikey]);
 
         if (results.length === 0) {
-            return res.status(400).json({ message: 'Identikey not found. Contact admin.' });
+            // Create a new user if identikey does not exist
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const insertQuery = `
+                INSERT INTO users (firstname, lastname, email, identikey, hashed_password)
+                VALUES (?, ?, ?, ?, ?)
+            `;
+
+            await db.query(insertQuery, [firstname, lastname, email, identikey, hashedPassword]);
+
+            return res.status(201).json({ message: 'Registration successful! You can now log in.' });
         }
 
+        // Update existing user if identikey exists
         const hashedPassword = await bcrypt.hash(password, 10);
         const updateQuery = `
             UPDATE users 
