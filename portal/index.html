@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legacy - ALPHA KAPPA PSI</title>
+    <title>Login - ALPHA KAPPA PSI</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="/assets/js/script.js"></script>
 </head>
 
 <body>
@@ -46,7 +45,7 @@
                     <a href="index.html" class="logo">
                         <img src="/assets/images/logo.png" alt="" class="img-fluid">
                     </a>
-                    <h2>Welcome to the AK Psi Member Portal</h2>
+                    <h2>Welcome to the AKPsi Member Portal</h2>
                     <p>Please sign in or register an account with your identikey as the username</p>
                     <form id="loginForm" action="/auth/login" method="post">
                         <div class="box">
@@ -76,10 +75,10 @@
                 <div class="col-1">
                     <h4>Browse</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                        <li><a href="portal.html">Member Portal</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About us</a></li>
+                        <li><a href="/recruitment/">Recruitment</a></li>
+                        <li><a href="/portal/">Member Portal</a></li>
                     </ul>
                 </div>
                 <div class="col-1">
@@ -90,47 +89,42 @@
                 <div class="col-1">
                     <h4>Keep in touch</h4>
                     <div class="icons d-flex align-center">
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#"><i class="fa-solid fa-envelope-open"></i></a>
+                        <a href="https://www.instagram.com/akpsiboulder/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="mailto:akpsigrush@gmail.com"><i class="fa-solid fa-envelope-open"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
-    <!-- fetch('https://akpsi-portal-8b825ba31535.herokuapp.com/auth/login', { -->
-
+    <!-- Login Script -->
     <script>
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault(); 
             const form = event.target;
-    
+
             const formData = {
                 identikey: form.identikey.value,
                 password: form.password.value
             };
-    
-            fetch('/auth/login', { // Use relative path
+
+            fetch('/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
+                credentials: 'include', // Ensure cookies are included
                 body: JSON.stringify(formData),
             })
             .then(async (response) => {
                 if (response.ok) {
                     const data = await response.json();
                     const { user, redirectUrl } = data;
-    
+
                     sessionStorage.setItem('preferred_name', user.preferred_name);
                     sessionStorage.setItem('year', user.year);
                     sessionStorage.setItem('totalPoints', user.totalPoints);
                     sessionStorage.setItem('unexcusedAbsences', user.unexcusedAbsences);
                     sessionStorage.setItem('points', JSON.stringify(user.points));
-    
+
                     window.location.href = redirectUrl;
                 } else {
                     const errorData = await response.json();
@@ -140,7 +134,7 @@
             .catch((error) => console.error('Error:', error));
         });
     </script>
-    
+
 </body>
 
 </html>
