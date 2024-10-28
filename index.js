@@ -173,14 +173,9 @@ app.use(express.static(__dirname));
 
 // Routes
 const authRoutes = require('./src/routes/auth');
-const pageRoutes = require('./src/routes/pages'); // Added line
+const pageRoutes = require('./src/routes/pages'); // Added this line
 app.use('/auth', authRoutes);
-app.use('/', pageRoutes); // Added line
-
-// Remove this block if routes are handled in pages.js
-// app.get(['/about', '/contact', '/recruitment', '/leadership', '/legacy'], (req, res) => {
-//   res.sendFile(path.join(__dirname, req.path, 'index.html'));
-// });
+app.use('/', pageRoutes); // Added this line
 
 // Handle 404 for unmatched routes
 app.use((req, res) => {
@@ -191,3 +186,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
