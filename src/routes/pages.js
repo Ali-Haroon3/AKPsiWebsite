@@ -25,9 +25,14 @@ router.get('/calendar', authMiddleware, (req, res) => {
 });
 
 // Serve points.html with authentication
+// router.get('/points', authMiddleware, (req, res) => {
+//     res.sendFile(path.join(__dirname, '../../portal/points.html'));
+// });
 router.get('/points', authMiddleware, (req, res) => {
     res.sendFile(path.join(__dirname, '../../portal/points.html'));
 });
+res.sendFile(path.resolve(__dirname, '../../portal/points.html'));
+
 
 // Serve about.html
 router.get('/about', (req, res) => {
