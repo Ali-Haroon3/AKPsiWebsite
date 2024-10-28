@@ -17,9 +17,10 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // **Mount the router at '/portal' BEFORE static middleware**
 const authRoutes = require('./src/routes/auth');
 const pageRoutes = require('./src/routes/pages'); // Ensure this line exists
+const userRoutes = require('./src/routes/user');
 app.use('/auth', authRoutes);
 app.use('/portal', pageRoutes); // Mounting at '/portal'
-
+app.use('/user', userRoutes);
 // Serve static files from 'portal' directory AFTER the router
 app.use('/portal', express.static(path.join(__dirname, 'portal')));
 

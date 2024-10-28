@@ -1,19 +1,24 @@
-// authMiddleware.js
+// src/middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
-module.exports = (req, res, next) => {
-    const token = req.cookies.token;
+dotenv.config();
+
+const authMiddleware = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-        return res.status(403).redirect('/portal/index.html');
+        return res.status(401).json({ message: 'Access token missing' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            console.error('JWT Verification Error:', err);
-            return res.status(401).send('Invalid token');
+            return res.status(403).json({ message: 'Invalid token' });
         }
-        req.userId = decoded.id;
+        req.userId = user.id; // Assuming the JWT payload contains the user ID as 'id'
         next();
     });
 };
+
+module.exports = authMiddleware;
