@@ -19,6 +19,7 @@
 │   ├── images
 │   │   ├── AboutPage
 │   │   ├── Alumni
+│   │   ├── ExecFall24.jpg
 │   │   ├── ExecSpring24.jpeg
 │   │   ├── SponsorshipImage.jpg
 │   │   ├── about-hero-bg.png
@@ -86,6 +87,7 @@
 │   │   ├── BrotherEmily.jpg
 │   │   └── BrotherLiz.jpeg
 │   ├── BrotherhoodImage2.jpg
+│   ├── ExecFall24.jpg
 │   ├── companies
 │   │   ├── Mars-logo.png
 │   │   ├── SponsorsTempImage.png
@@ -103,7 +105,7 @@
 │       ├── AllyMilton.JPG
 │       ├── AlyssaZislisHeadshot.jpg
 │       ├── AnnaHeadshot.jpeg
-│       ├── HaroonHeadshot (1).jpg
+│       ├── HaroonHeadshot.jpg
 │       ├── JTuck (1).jpeg
 │       ├── JakeHattonHeadshot.jpeg
 │       ├── JakeTonsfeldtHeadshot.jpg
@@ -854,6 +856,7 @@
 ├── sponsorship.html
 ├── src
 │   ├── createTables.sql
+│   ├── generateHash.js
 │   ├── middleware
 │   │   └── authMiddleware.js
 │   ├── models
@@ -873,4 +876,4 @@
         ├── footer.html
         └── header.html
 
-209 directories, 665 files
+209 directories, 668 files
