@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const db = require('../models/db'); // Updated to use connection pool
+const pool = require('../db');
 
 // Login Route
 // router.post('/login', async (req, res) => {
