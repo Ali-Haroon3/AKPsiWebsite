@@ -1,28 +1,10 @@
-// const express = require('express');
-// const router = express.Router();
-// const db = require('../models/db');
-// const authMiddleware = require('../middleware/authMiddleware');
-
-// router.get('/auth/user', authMiddleware, (req, res) => {
-//     const userId = req.userId;
-
-//     const query = 'SELECT firstname, lastname, total_points, needed_points FROM users WHERE id = ?';
-//     db.query(query, [userId], (err, results) => {
-//         if (err) return res.status(500).json({ message: 'Error fetching user data' });
-
-//         if (results.length === 0) return res.status(404).json({ message: 'User not found' });
-
-//         res.json(results[0]);
-//     });
-// });
-
-// module.exports = router;
+// src/routes/user.js
 const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 const authMiddleware = require('../middleware/authMiddleware');
 
-router.get('/auth/user', authMiddleware, (req, res) => {
+router.get('/auth/user', authMiddleware, async (req, res) => {
     const userId = req.userId;
 
     const query = `
@@ -40,14 +22,16 @@ router.get('/auth/user', authMiddleware, (req, res) => {
             sobro, wellness_week_events, zeta_chats, total
         FROM users WHERE id = ?`;
 
-    db.query(query, [userId], (err, results) => {
-        if (err) return res.status(500).json({ message: 'Error fetching user data' });
-
-        if (results.length === 0) return res.status(404).json({ message: 'User not found' });
-
+    try {
+        const [results] = await db.query(query, [userId]);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         res.json(results[0]);
-    });
+    } catch (err) {
+        console.error('Error fetching user data:', err);
+        res.status(500).json({ message: 'Error fetching user data' });
+    }
 });
-
 
 module.exports = router;

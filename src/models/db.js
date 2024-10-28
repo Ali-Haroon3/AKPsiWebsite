@@ -2,17 +2,17 @@
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 
-// Load environment variables from .env file (if you're using one)
+// Load environment variables
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'autorack.proxy.rlwy.net',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'nwgSLDCWNjHanJSFseHbCMTxZrVbyqlV',
+  host: process.env.MYSQL_HOST || 'localhost', // Updated to MYSQL_HOST
+  user: process.env.MYSQL_USER || 'root',      // Updated to MYSQL_USER
+  password: process.env.MYSQL_PASSWORD || '',  // Updated to MYSQL_PASSWORD
   database: process.env.MYSQL_DATABASE || 'akpsi_portal',
-  port: process.env.DB_PORT || 50203,
+  port: process.env.MYSQL_PORT || 3306,        // Updated to MYSQL_PORT
   waitForConnections: true,
-  connectionLimit: 10, // Adjust based on your needs
+  connectionLimit: 10,
   queueLimit: 0,
 });
 

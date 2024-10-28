@@ -318,24 +318,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('/user/auth/user', { method: 'GET', credentials: 'include' })
-                .then(response => response.json())
-                .then(user => {
-                    document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
-                    document.getElementById('profile-year').innerText = user.year;
-                    document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences;
-
-                    const chartData = Object.values(user.points);
-                    const ctx = document.getElementById('pointsChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: Object.keys(user.points),
-                            datasets: [{ data: chartData }]
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching user data:', error));
+            fetch('/user/auth/user', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(user => {
+                document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
+                document.getElementById('profile-year').innerText = user.year || 'Year not specified';
+                document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
+    
+                const points = {
+                    'Alumni Tailgate': user.alumni_tailgate,
+                    'Assisting with Interviews': user.assisting_with_interviews,
+                    'Big Brother Mentor': user.big_brother_mentor,
+                    'Brother Interviews': user.brother_interviews,
+                    'BUSIK Letters': user.busik_letters,
+                    // ... add other point categories ...
+                };
+    
+                const chartData = Object.values(points);
+                const ctx = document.getElementById('pointsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(points),
+                        datasets: [{
+                            data: chartData,
+                            backgroundColor: chartData.map(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+                        }]
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching user data:', error));
         });
     </script>
 </body>
