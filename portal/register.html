@@ -42,7 +42,7 @@
         <div class="modal__content">
             <div class="row d-flex">
                 <div class="col-1">
-                    <a href="index.html" class="logo">
+                    <a href="/portal/index.html" class="logo">
                         <img src="/assets/images/logo.png" alt="" class="img-fluid">
                     </a>
                     <h2>Register for the AKPsi Member Portal</h2>
@@ -75,7 +75,7 @@
                         <input type="submit" value="Register" class="btn-sign-in">
                         <p id="error-message" style="color: red;"></p>
                     </form>
-                    <p class="bottom-para">Already have an account? <a href="/portal/">Sign In</a></p>
+                    <p class="bottom-para">Already have an account? <a href="/portal/index.html">Sign In</a></p>
                 </div>
                 <div class="col-1 main-img">
                     <img src="/assets/images/sigin-img.png" alt="" class="img-fluid">
@@ -155,7 +155,7 @@
             fetch(form.action, {
                 method: form.method,
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include', // Added to include cookies
+                credentials: 'include', // Ensure cookies are included
                 body: JSON.stringify(formData),
             })
                 .then(response => {
@@ -168,7 +168,7 @@
                 .then(data => {
                     console.log('Fetch success data:', data); // Debugging
                     document.getElementById('error-message').innerText = data.message;
-                    window.location.href = '/'; // Redirect to login page
+                    window.location.href = '/portal/index.html'; // Redirect to login page
                 })
                 .catch(error => {
                     if (error.message) {
