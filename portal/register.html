@@ -161,7 +161,7 @@
                 })
                 .then(data => {
                     document.getElementById('error-message').innerText = data.message;
-                    window.location.href = '/portal';
+                    window.location.href = '/';
                 })
                 .catch(error => {
                     if (error.message) {

@@ -102,17 +102,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
+    <!-- fetch('https://akpsi-portal-8b825ba31535.herokuapp.com/auth/login', { -->
+
     <script>
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault(); 
             const form = event.target;
-
+    
             const formData = {
                 identikey: form.identikey.value,
                 password: form.password.value
             };
-
-            fetch('https://akpsi-portal-8b825ba31535.herokuapp.com/auth/login', {
+    
+            fetch('/auth/login', { // Use relative path
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -122,13 +124,13 @@
                 if (response.ok) {
                     const data = await response.json();
                     const { user, redirectUrl } = data;
-
+    
                     sessionStorage.setItem('preferred_name', user.preferred_name);
                     sessionStorage.setItem('year', user.year);
                     sessionStorage.setItem('totalPoints', user.totalPoints);
                     sessionStorage.setItem('unexcusedAbsences', user.unexcusedAbsences);
                     sessionStorage.setItem('points', JSON.stringify(user.points));
-
+    
                     window.location.href = redirectUrl;
                 } else {
                     const errorData = await response.json();
@@ -138,6 +140,7 @@
             .catch((error) => console.error('Error:', error));
         });
     </script>
+    
 </body>
 
 </html>
