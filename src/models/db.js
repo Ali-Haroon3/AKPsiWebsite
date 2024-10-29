@@ -1,20 +1,20 @@
-// src/models/db.js
+// models/db.js
 const mysql = require('mysql2/promise');
-const dotenv = require('dotenv');
-
-// Load environment variables
-dotenv.config();
+require('dotenv').config();
 
 const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST || 'localhost', // Updated to MYSQL_HOST
-  user: process.env.MYSQL_USER || 'root',      // Updated to MYSQL_USER
-  password: process.env.MYSQL_PASSWORD || '',  // Updated to MYSQL_PASSWORD
-  database: process.env.MYSQL_DATABASE || 'akpsi_portal',
-  port: process.env.MYSQL_PORT || 3306,        // Updated to MYSQL_PORT
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+    host: process.env.MYSQL_HOST,      // e.g., 'autorack.proxy.rlwy.net'
+    user: process.env.MYSQL_USER,      // e.g., 'root'
+    password: process.env.MYSQL_PASSWORD, // your MySQL password
+    database: process.env.MYSQL_DATABASE, // e.g., 'railway'
+    port: process.env.MYSQL_PORT,      // e.g., 50203
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
+
+module.exports = pool;
+
 
 // Optional: Test the connection pool
 pool.getConnection()
