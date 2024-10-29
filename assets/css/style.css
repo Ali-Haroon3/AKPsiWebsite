@@ -1009,7 +1009,7 @@ details[open] summary::after {
 }
 .modal .col-1:nth-child(1) .bottom-para{
     position: absolute;
-    bottom: 20px;
+    /*bottom: 20px;*/
 
 }
 .modal .bottom-para a {
