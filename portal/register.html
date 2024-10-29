@@ -116,70 +116,76 @@
     </footer>
 
     <!-- Registration Script -->
-    <script>
-        var check = function () {
-            const password = document.getElementById('fpassword').value;
-            const confirmPassword = document.getElementById('fconfirmpassword').value;
+<script>
+    var check = function () {
+        const password = document.getElementById('fpassword').value;
+        const confirmPassword = document.getElementById('fconfirmpassword').value;
 
-            if (password === confirmPassword && password !== '') {
-                document.getElementById('message').style.color = 'green';
-                document.getElementById('message').innerText = 'Matching';
-            } else {
-                document.getElementById('message').style.color = 'red';
-                document.getElementById('message').innerText = 'Not matching';
-            }
+        if (password === confirmPassword && password !== '') {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerText = 'Matching';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerText = 'Not matching';
+        }
+    };
+
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        console.log('Register form submitted'); // Debugging
+
+        const form = event.target;
+        const formData = {
+            firstname: form.firstname.value,
+            lastname: form.lastname.value,
+            identikey: form.identikey.value,
+            email: form.email.value,
+            password: form.password.value,
         };
 
-        document.getElementById('registerForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            console.log('Register form submitted'); // Debugging
+        // Ensure password and confirmPassword match
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
+        console.log('Password:', password, 'Confirm Password:', confirmPassword); // Debugging
+        if (password !== confirmPassword) {
+            document.getElementById('error-message').innerText = 'Passwords do not match.';
+            return;
+        }
 
-            const form = event.target;
-            const formData = {
-                firstname: form.firstname.value,
-                lastname: form.lastname.value,
-                identikey: form.identikey.value,
-                email: form.email.value,
-                password: form.password.value,
-            };
-
-            // Ensure password and confirmPassword match
-            const password = form.password.value;
-            const confirmPassword = form.confirmPassword.value;
-            console.log('Password:', password, 'Confirm Password:', confirmPassword); // Debugging
-            if (password !== confirmPassword) {
-                document.getElementById('error-message').innerText = 'Passwords do not match.';
-                return;
-            }
-
-            fetch(form.action, {
-                method: form.method,
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include', // Ensure cookies are included
-                body: JSON.stringify(formData),
+        fetch(form.action, {
+            method: form.method,
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', // Ensure cookies are included
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                console.log('Fetch response status:', response.status); // Debugging
+                if (!response.ok) {
+                    return response.json().then(data => { throw data });
+                }
+                return response.json();
             })
-                .then(response => {
-                    console.log('Fetch response status:', response.status); // Debugging
-                    if (!response.ok) {
-                        return response.json().then(data => { throw data });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Fetch success data:', data); // Debugging
-                    document.getElementById('error-message').innerText = data.message;
-                    window.location.href = '/portal/index.html'; // Redirect to login page
-                })
-                .catch(error => {
-                    if (error.message) {
-                        document.getElementById('error-message').innerText = error.message;
-                    } else {
-                        console.error('Error:', error);
-                        document.getElementById('error-message').innerText = 'An error occurred. Please try again.';
-                    }
-                });
-        });
-    </script>
+            .then(data => {
+                console.log('Fetch success data:', data); // Debugging
+                // Display success message
+                document.getElementById('error-message').style.color = 'green';
+                document.getElementById('error-message').innerText = data.message;
+                // Redirect to login page after a short delay
+                setTimeout(() => {
+                    window.location.href = '/portal/index.html';
+                }, 2000);
+            })
+            .catch(error => {
+                if (error.message) {
+                    document.getElementById('error-message').style.color = 'red';
+                    document.getElementById('error-message').innerText = error.message;
+                } else {
+                    console.error('Error:', error);
+                    document.getElementById('error-message').innerText = 'An error occurred. Please try again.';
+                }
+            });
+    });
+</script>
 
 </body>
 

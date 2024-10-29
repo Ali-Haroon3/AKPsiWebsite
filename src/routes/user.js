@@ -34,5 +34,22 @@ router.get('/auth/user', authMiddleware, (req, res) => {
             res.status(500).json({ message: 'Error fetching user data' });
         });
 });
+router.get('/leaderboard', authMiddleware, (req, res) => {
+    const query = `
+        SELECT 
+            firstname, lastname, identikey, total_points
+        FROM users
+        ORDER BY total_points DESC
+        LIMIT 10
+    `;
 
+    db.query(query)
+        .then(([rows]) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.error('Error fetching leaderboard data:', err);
+            res.status(500).json({ message: 'Error fetching leaderboard data' });
+        });
+});
 module.exports = router;

@@ -1,206 +1,3 @@
-<!-- <!DOCTYPE HTML>
-<html>
-
-<head>
-    <title>Alpha Kappa Psi - Points</title>
-    <link rel="icon" type="image/png" href="../favicon.png" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link href="/assets/vendor/ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/css/animate.min.css" rel="stylesheet">
-    <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
-    <link href="/assets/css/fonts.css" rel="stylesheet">
-    <link href="/assets/img/favicon.png" rel="icon">
-    <script src="jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .points-outline {
-            border: 2px solid #000;
-            padding: 20px;
-            margin-right: 15px;
-            background-color: #f9f9f9;
-        }
-
-        .points-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .points-row .points-outline:last-child {
-            margin-right: 0;
-        }
-
-        .table-bordered th {
-            background-color: #063060;
-            color: white;
-            font-size: 16px;
-        }
-
-        .sobro-table {
-            height: 66%;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .points-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .profile-info {
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        .profile-info h1 {
-            font-size: 32px;
-            font-weight: bold;
-            color: #063060;
-        }
-
-        .profile-info p {
-            font-size: 20px;
-            color: #2d2d2d;
-        }
-
-        .unexcused-absences {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .points-footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .points-footer-content p {
-            margin: 5px 0;
-            color: #063060;
-        }
-    </style>
-</head>
-
-<body class="is-preload">
-    <div class="points-body">
-        <section class="points-header">
-            <div class="member-logo-points">
-                <img class="logo-image" src="../images/logo.png" alt="Chapter Logo" />
-            </div>
-            <a class="nav-link1" href="points.html">Points</a>
-            <a class="nav-link2" href="calendar.html">Calendar</a>
-            <a class="nav-link3" href="/portal/">Logout</a>
-        </section>
-
-        <section class="profile-info">
-            <h1 id="profile-fullname">Preferred Name</h1>
-            <p id="profile-year">Year</p>
-        </section>
-
-        <section class="points-content">
-            <div class="points-row">
-                <div class="points-outline">
-                    <h2>Profile Settings</h2>
-                    <form class="points-form">
-                        <label for="ffirstname">First Name</label><br>
-                        <input type="text" id="ffirstname" required><br><br>
-                        <label for="flastname">Last Name</label><br>
-                        <input type="text" id="flastname" required><br><br>
-                        <label for="fpassword">Password</label><br>
-                        <input type="password" id="fpassword" required><br><br>
-                        <input type="submit" value="Save Changes">
-                    </form>
-                </div>
-
-                <div class="points-outline">
-                    <h2>Brother Interviews</h2>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Points</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>John Doe</td><td>2024-08-01</td><td>5</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="points-outline sobro-table">
-                    <h2>So-Bros</h2>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr><th>Name</th><th>Task</th><th>Status</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Michael Brown</td><td>Drive to event</td><td>Completed</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="unexcused-absences">
-                <h2>Unexcused Absences: <span id="unexcused-absences-count">0</span></h2>
-            </div>
-
-            <div class="points-center">
-                <div class="points-outline stats">
-                    <canvas id="pointsChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section class="points-footer">
-            <div class="points-footer-content">
-                <p>Designed by Ali Haroon &copy; 2024 Alpha Kappa Psi</p>
-            </div>
-        </section>
-    </div>
-
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('https://akpsi-portal-8b825ba31535.herokuapp.com/user/auth/user', {
-        method: 'GET',
-        credentials: 'include'
-    })
-    .then(response => response.json())
-    .then(user => {
-        document.getElementById('profile-fullname').innerText = user.firstname + ' ' + user.lastname;
-        document.getElementById('profile-year').innerText = user.year;
-        document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences;
-
-        const chartData = Object.values(user.points);
-        const ctx = document.getElementById('pointsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(user.points),
-                datasets: [{ data: chartData }]
-            }
-        });
-    })
-    .catch(error => console.error('Error fetching user data:', error));
-});
-
-
-    </script>
-</body>
-
-</html> -->
 <!DOCTYPE HTML>
 <html>
 
@@ -227,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <style>
         /* Unchanged CSS styles */
         .points-outline { border: 2px solid #000; padding: 20px; margin-right: 15px; background-color: #f9f9f9; }
-        .points-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .points-row { display: flex; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; }
         .points-row .points-outline:last-child { margin-right: 0; }
         .table-bordered th { background-color: #063060; color: white; font-size: 16px; }
         .sobro-table { height: 66%; }
@@ -239,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
         .unexcused-absences { text-align: center; margin-top: 20px; font-size: 24px; font-weight: bold; }
         .points-footer { margin-top: 30px; text-align: center; font-size: 14px; }
         .points-footer-content p { margin: 5px 0; color: #063060; }
+        .leaderboard { margin-top: 30px; }
+        .leaderboard h2 { margin-bottom: 20px; }
     </style>
 </head>
 
@@ -260,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <section class="points-content">
             <div class="points-row">
+                <!-- Profile Settings -->
                 <div class="points-outline">
                     <h2>Profile Settings</h2>
                     <form class="points-form">
@@ -269,10 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         <input type="text" id="flastname" required /><br /><br />
                         <label for="fpassword">Password</label><br />
                         <input type="password" id="fpassword" required /><br /><br />
-                        <input type="submit" value="Save Changes" />
+                        <input type="submit" value="Save Changes" class="btn btn-primary">
                     </form>
                 </div>
 
+                <!-- Brother Interviews -->
                 <div class="points-outline">
                     <h2>Brother Interviews</h2>
                     <table class="table table-bordered">
@@ -281,10 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         </thead>
                         <tbody>
                             <tr><td>John Doe</td><td>2024-08-01</td><td>5</td></tr>
+                            <!-- Dynamic entries can be added here -->
                         </tbody>
                     </table>
                 </div>
 
+                <!-- So-Bros -->
                 <div class="points-outline sobro-table">
                     <h2>So-Bros</h2>
                     <table class="table table-bordered">
@@ -293,15 +96,35 @@ document.addEventListener('DOMContentLoaded', function () {
                         </thead>
                         <tbody>
                             <tr><td>Michael Brown</td><td>Drive to event</td><td>Completed</td></tr>
+                            <!-- Dynamic entries can be added here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="points-outline leaderboard">
+                    <h2>Leaderboard - Top 10 Points</h2>
+                    <table class="table table-bordered" id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Total Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Leaderboard entries will be inserted here -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- Unexcused Absences -->
             <div class="unexcused-absences">
                 <h2>Unexcused Absences: <span id="unexcused-absences-count">0</span></h2>
             </div>
 
+            <!-- Points Chart -->
             <div class="points-center">
                 <div class="points-outline stats">
                     <canvas id="pointsChart" width="400" height="400"></canvas>
@@ -309,15 +132,19 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         </section>
 
+        <!-- Footer -->
         <section class="points-footer">
             <div class="points-footer-content">
                 <p>Designed by Ali Haroon &copy; 2024 Alpha Kappa Psi</p>
+                <p>For more details on events and requirements: <a href="https://apple.com">see here</a></p>
             </div>
         </section>
     </div>
 
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Fetch user data
             fetch('/user/auth/user', {
                 method: 'GET',
                 credentials: 'include'
@@ -329,33 +156,134 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(user => {
+                // Populate Profile Info
                 document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
                 document.getElementById('profile-year').innerText = user.year || 'Year not specified';
                 document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
-    
+
+                // Define all point categories
                 const points = {
                     'Alumni Tailgate': user.alumni_tailgate,
                     'Assisting with Interviews': user.assisting_with_interviews,
                     'Big Brother Mentor': user.big_brother_mentor,
                     'Brother Interviews': user.brother_interviews,
                     'BUSIK Letters': user.busik_letters,
-                    // ... add other point categories ...
+                    'Chapter Attendance': user.chapter_attendance,
+                    'Committee/Cabinet Member': user.committee_cabinet_member,
+                    'Domingos': user.domingos,
+                    'Exec Member': user.exec_member,
+                    'Family Hangouts': user.family_hangouts,
+                    'Family Head': user.family_head,
+                    'Forms': user.forms,
+                    'Missing/Late Forms': user.missing_late_forms,
+                    'Hosting Family Initiation': user.hosting_family_initiation,
+                    'Hosting Official Initiation': user.hosting_official_initiation,
+                    'Initiation So-Bro': user.initiation_so_bro,
+                    'Perfect Attendance': user.perfect_attendance,
+                    'Perfect Recruitment Attendance': user.perfect_recruitment_attendance,
+                    'Photocircle Upload 10': user.photocircle_upload_10,
+                    'Posting on Story': user.posting_on_story,
+                    'Professional Headshot': user.professional_headshot,
+                    'Recruitment Tabling': user.recruitment_tabling,
+                    'Rush Attendance': user.rush_attendance,
+                    'Rush Event Missed': user.rush_event_missed,
+                    'Service Event Attendance': user.service_event_attendance,
+                    'So-Bro': user.sobro,
+                    'Wellness Week Events': user.wellness_week_events,
+                    'Zeta Chats': user.zeta_chats
                 };
-    
-                const chartData = Object.values(points);
+
+                // Filter out zero or null values if desired
+                const filteredPoints = Object.entries(points)
+                    .filter(([key, value]) => value > 0)
+                    .reduce((obj, [key, value]) => {
+                        obj[key] = value;
+                        return obj;
+                    }, {});
+
+                // Create Points Chart
+                const chartData = Object.values(filteredPoints);
                 const ctx = document.getElementById('pointsChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'pie',
                     data: {
-                        labels: Object.keys(points),
+                        labels: Object.keys(filteredPoints),
                         datasets: [{
                             data: chartData,
-                            backgroundColor: chartData.map(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+                            backgroundColor: generateColors(Object.keys(filteredPoints).length)
                         }]
-                    }
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        return `${label}: ${value}`;
+                                    }
+                                }
+                            }
+                        },
+                    },
+                });
+
+                // Fetch Leaderboard Data
+                return fetch('/user/leaderboard', {
+                    method: 'GET',
+                    credentials: 'include'
                 });
             })
-            .catch(error => console.error('Error fetching user data:', error));
+            .then(response => response.json())
+            .then(leaderboard => {
+                const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
+                leaderboard.forEach((entry, index) => {
+                    const tr = document.createElement('tr');
+
+                    // Rank
+                    const rankTd = document.createElement('td');
+                    rankTd.innerText = index + 1;
+                    tr.appendChild(rankTd);
+
+                    // Name or Identikey
+                    const nameTd = document.createElement('td');
+                    let name;
+                    if (entry.firstname && entry.lastname) {
+                        name = `${entry.firstname} ${entry.lastname}`;
+                    } else {
+                        name = entry.identikey;
+                    }
+                    nameTd.innerText = name;
+                    tr.appendChild(nameTd);
+
+                    // Total Points
+                    const pointsTd = document.createElement('td');
+                    pointsTd.innerText = entry.total_points;
+                    tr.appendChild(pointsTd);
+
+                    leaderboardTableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+            /**
+             * Generates an array of distinct colors.
+             * @param {number} count - Number of colors to generate.
+             * @returns {string[]} Array of color hex codes.
+             */
+            function generateColors(count) {
+                const colors = [];
+                const step = Math.floor(360 / count);
+                for (let i = 0; i < count; i++) {
+                    const hue = i * step;
+                    colors.push(`hsl(${hue}, 70%, 50%)`);
+                }
+                return colors;
+            }
         });
     </script>
 </body>
