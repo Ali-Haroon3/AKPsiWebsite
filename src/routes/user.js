@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 const authMiddleware = require('../middleware/authMiddleware');
+const bcrypt = require('bcryptjs');
+
 
 // Fetch Authenticated User Data
 router.get('/auth/user', authMiddleware, (req, res) => {

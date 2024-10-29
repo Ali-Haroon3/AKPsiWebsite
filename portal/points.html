@@ -156,15 +156,21 @@
                         </div>
                         <div class="mb-3">
                             <label for="fnewpassword" class="form-label">New Password</label>
-                            <input type="password" id="fnewpassword" class="form-control" required />
+                            <input type="password" id="fnewpassword" class="form-control" onkeyup="check();" required />
                         </div>
                         <div class="mb-3">
-                            <label for="fconfirmpassword" class="form-label">Confirm New Password</label>
-                            <input type="password" id="fconfirmpassword" class="form-control" required />
+                            <label for="fconfirmpassword" class="form-label">
+                                Confirm New Password <span id="password-message"></span>
+                            </label>
+                            <input type="password" id="fconfirmpassword" class="form-control" onkeyup="check();" required />
                         </div>
-                        <button type="submit" class="btn btn-primary" style="background-color: #063060; border-color: #063060;">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #063060; border-color: #063060;">
+                            Save Changes
+                        </button>
                     </form>
                 </div>
+            </div>
+            
 
 
                <!-- Brother Interviews -->
@@ -186,7 +192,7 @@
 
                 <!-- So-Bros -->
                 <div class="points-outline sobro-table">
-                    <h2>So-Bros</h2>
+                    <h2>Next So-Bros</h2>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -525,33 +531,61 @@ fetch('/user/brother-interviews', {
             }
 
             // Send request to update password
-            fetch('/user/update-password', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    oldPassword,
-                    newPassword
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Password updated successfully.');
-                    // Optionally, reset the form fields
-                    document.getElementById('profile-form').reset();
-                } else {
-                    alert('Error updating password: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error updating password:', error);
-                alert('An error occurred while updating the password.');
-            });
-        });
+            document.getElementById('profile-form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const email = document.getElementById('femail').value.trim();
+    const oldPassword = document.getElementById('foldpassword').value;
+    const newPassword = document.getElementById('fnewpassword').value;
+    const confirmPassword = document.getElementById('fconfirmpassword').value;
+
+    // Check if new passwords match
+    if (newPassword !== confirmPassword) {
+        alert('New password and confirm password do not match.');
+        return; // Stop further execution
+    }
+
+    // Disable the submit button to prevent multiple submissions
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
+    // Send the password update request
+    fetch('/user/update-password', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email,
+            oldPassword,
+            newPassword
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update password.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Password updated successfully.');
+            document.getElementById('profile-form').reset(); // Reset the form
+        } else {
+            alert('Error updating password: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error updating password:', error);
+        alert('An error occurred while updating the password. Please try again later.');
+    })
+    .finally(() => {
+        // Re-enable the submit button
+        submitButton.disabled = false;
+    });
+});
+});
     </script>
 </body>
 
