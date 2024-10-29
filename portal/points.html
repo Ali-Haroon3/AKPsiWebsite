@@ -136,6 +136,7 @@
         <section class="profile-info">
             <h1 id="profile-fullname">Preferred Name</h1>
             <p id="profile-total-points">Total Points</p>
+            <p id="points-bottom-50">Points for Bottom 50%: </p>
         </section>
 
         <!-- Main Content -->
@@ -161,29 +162,23 @@
                     </form>
                 </div>
 
-                <!-- Brother Interviews -->
-                <div class="points-outline">
-                    <h2>Brother Interviews</h2>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Date</th>
-                                    <th>Points</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>2024-08-01</td>
-                                    <td>5</td>
-                                </tr>
-                                <!-- Dynamic entries can be added here -->
-                            </tbody>
-                        </table>
-                    </div>
+               <!-- Brother Interviews -->
+            <div class="points-outline">
+                <h2>Brother Interviews</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Brother Name</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="brother-interviews-table-body">
+                            <!-- Brother interviews will be inserted here -->
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
                 <!-- So-Bros -->
                 <div class="points-outline sobro-table">
@@ -251,7 +246,7 @@
         <section class="points-footer calendar">
             <div class="points-footer-content">
               <p class="footer-credits">Designed by Ali Haroon <br> &copy; 2024 Alpha Kappa Psi</h>
-              <p class="footer-links">For more details on events and requirements: <a class="footer" href="https://apple.com">see here</a></h>
+              <p class="footer-links">For more details on events and requirements: <a class="footer" href="https://www.wikihow.com/Talk-to-a-Girl">see here</a></h>
             </div>
           </section>
     </div>
@@ -273,8 +268,11 @@
             .then(user => {
                 // Populate Profile Info
                 document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
-                document.getElementById('profile-total-points').innerText = `Total Points: ${user.totalPoints || 0}`;
-                document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
+                // document.getElementById('profile-total-points').innerText = `Total Points: ${user.totalPoints || 0}`;
+                // document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
+                document.getElementById('profile-total-points').innerText = `Total Points: ${user.total_points || 0}`;
+                document.getElementById('unexcused-absences-count').innerText = user.unexcused_absences || 0;
+
 
                 // Define all point categories
                 const points = {
@@ -401,6 +399,37 @@
                 return colors;
             }
         });
+        fetch('/user/brother-interviews', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(interviews => {
+            const tableBody = document.getElementById('brother-interviews-table-body');
+            interviews.forEach(interview => {
+                const tr = document.createElement('tr');
+
+                const nameTd = document.createElement('td');
+                nameTd.innerText = interview.brother_name;
+                tr.appendChild(nameTd);
+
+                const dateTd = document.createElement('td');
+                dateTd.innerText = interview.date;
+                tr.appendChild(dateTd);
+
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch(error => console.error('Error fetching brother interviews:', error));
+        fetch('/user/points/bottom50', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('points-bottom-50').innerText = `Points for Bottom 50%: ${data.bottom50Points || 0}`;
+        })
+        .catch(error => console.error('Error fetching bottom 50 points:', error));
     </script>
 </body>
 
