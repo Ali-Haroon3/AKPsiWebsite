@@ -398,6 +398,7 @@
                 return colors;
             }
         });
+       // Fetch Brother Interviews
         fetch('/user/brother-interviews', {
             method: 'GET',
             credentials: 'include'
@@ -409,12 +410,13 @@
                 const tr = document.createElement('tr');
 
                 const nameTd = document.createElement('td');
-                nameTd.innerText = interview.pledge_full_name;  // Adjusted field name
+                nameTd.innerText = interview.pledge_full_name;  // Updated field
                 tr.appendChild(nameTd);
 
-                const dateTd = document.createElement('td');
-                dateTd.innerText = interview.date || 'N/A';  // If date is not available
-                tr.appendChild(dateTd);
+                // Optional: Remove or adjust the dateTd
+                // const dateTd = document.createElement('td');
+                // dateTd.innerText = interview.date || 'N/A';
+                // tr.appendChild(dateTd);
 
                 tableBody.appendChild(tr);
             });
