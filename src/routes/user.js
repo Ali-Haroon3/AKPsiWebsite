@@ -112,6 +112,31 @@ router.get('/leaderboard', authMiddleware, (req, res) => {
 //             res.status(500).json({ message: 'Error fetching brother interviews' });
 //         });
 // });
+// router.get('/brother-interviews', authMiddleware, async (req, res) => {
+//     try {
+//         const userId = req.userId;
+
+//         // Get the identikey of the user (brother)
+//         const [userResults] = await db.query('SELECT identikey FROM users WHERE id = ?', [userId]);
+
+//         if (userResults.length === 0) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+
+//         const brotherIdentikey = userResults[0].identikey;
+
+//         // Fetch all pledges interviewed by this brother
+//         const [interviews] = await db.query(
+//             'SELECT pledge_full_name FROM brother_interviews WHERE brother_identikey = ?',
+//             [brotherIdentikey]
+//         );
+
+//         res.json(interviews);
+//     } catch (err) {
+//         console.error('Error fetching brother interviews:', err);
+//         res.status(500).json({ message: 'Error fetching brother interviews' });
+//     }
+// });
 router.get('/brother-interviews', authMiddleware, async (req, res) => {
     try {
         const userId = req.userId;
@@ -125,18 +150,21 @@ router.get('/brother-interviews', authMiddleware, async (req, res) => {
 
         const brotherIdentikey = userResults[0].identikey;
 
-        // Fetch all pledges interviewed by this brother
+        // Fetch all pledges interviewed by this brother and aggregate them into a list
         const [interviews] = await db.query(
             'SELECT pledge_full_name FROM brother_interviews WHERE brother_identikey = ?',
             [brotherIdentikey]
         );
 
-        res.json(interviews);
+        const pledgeNames = interviews.map(interview => interview.pledge_full_name);
+
+        res.json({ pledges: pledgeNames });
     } catch (err) {
         console.error('Error fetching brother interviews:', err);
         res.status(500).json({ message: 'Error fetching brother interviews' });
     }
 });
+
 router.get('/points/bottom50', authMiddleware, async (req, res) => {
     try {
         // Get the total number of users
