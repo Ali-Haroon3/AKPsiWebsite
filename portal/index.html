@@ -102,44 +102,44 @@
 
     <!-- Login Script -->
     <script>
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault(); 
-        const form = event.target;
-
-        const formData = {
-            identikey: form.identikey.value,
-            password: form.password.value
-        };
-
-        fetch('/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include', // Ensure cookies are included
-            body: JSON.stringify(formData),
-        })
-        .then(async (response) => {
-            if (response.ok) {
-                const data = await response.json();
-                const { user, redirectUrl } = data;
-
-                console.log('Redirect URL:', redirectUrl); // Debugging line
-
-                sessionStorage.setItem('preferred_name', user.preferred_name);
-                sessionStorage.setItem('year', user.year);
-                sessionStorage.setItem('totalPoints', user.totalPoints);
-                sessionStorage.setItem('unexcusedAbsences', user.unexcusedAbsences);
-                sessionStorage.setItem('points', JSON.stringify(user.points));
-
-                window.location.href = redirectUrl;
-            } else {
-                const errorData = await response.json();
-                document.getElementById('login-error-message').innerText = errorData.message;
-            }
-        })
-        .catch((error) => console.error('Error:', error));
-    });
-</script>
-
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); 
+            const form = event.target;
+    
+            const formData = {
+                identikey: form.identikey.value,
+                password: form.password.value
+            };
+    
+            fetch('/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include', // Ensure cookies are included
+                body: JSON.stringify(formData),
+            })
+            .then(async (response) => {
+                if (response.ok) {
+                    const data = await response.json();
+                    const { user, redirectUrl } = data;
+    
+                    console.log('Redirect URL:', redirectUrl); // Debugging line
+    
+                    sessionStorage.setItem('preferred_name', user.preferred_name);
+                    sessionStorage.setItem('year', user.year);
+                    sessionStorage.setItem('totalPoints', user.totalPoints);
+                    sessionStorage.setItem('unexcusedAbsences', user.unexcusedAbsences);
+                    sessionStorage.setItem('points', JSON.stringify(user.points));
+    
+                    window.location.href = redirectUrl;
+                } else {
+                    const errorData = await response.json();
+                    document.getElementById('login-error-message').innerText = errorData.message;
+                }
+            })
+            .catch((error) => console.error('Error:', error));
+        });
+    </script>
+    
 </body>
 
 </html>
