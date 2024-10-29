@@ -969,17 +969,29 @@ details[open] summary::after {
     outline: none;
 }
 
-.modal form input.btn-sign-in {
+/* .modal form input.btn-sign-in {
     background-color: transparent;
     color: #074B92;
     font-size: 20px;
-    width: auto; /* Adjust the width to auto to fit the text */
-    padding: 10px 20px; /* Add some padding */
+    width: auto; 
+    padding: 10px 20px; 
     font-weight: 500;
     cursor: pointer;
-    border: none; /* Ensure there is no border */
+    border: none; 
+} */
+.modal form .btn-sign-in {
+    background-color: transparent;
+    color: #074B92;
+    font-size: 20px;
+    width: 100%; /* Full width */
+    padding: 10px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    border: 2px solid #074B92; /* Add border for better visibility */
+    transition: background-color 0.3s, color 0.3s;
 }
-
 .modal form input.btn-sign-in:hover {
     color: var(---dark-secondary-color);
 }
