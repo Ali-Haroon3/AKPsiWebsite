@@ -143,7 +143,6 @@
         <section class="points-content container">
             <div class="points-row">
                 <!-- Profile Settings -->
-              <!-- Profile Settings -->
                 <div class="points-outline">
                     <h2>Profile Settings</h2>
                     <form id="profile-form" class="points-form">
@@ -513,46 +512,46 @@ fetch('/user/brother-interviews', {
         })
         .catch(error => console.error('Error fetching bottom 50 points:', error));
         document.getElementById('profile-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+            e.preventDefault();
 
-        const email = document.getElementById('femail').value.trim();
-        const oldPassword = document.getElementById('foldpassword').value;
-        const newPassword = document.getElementById('fnewpassword').value;
-        const confirmPassword = document.getElementById('fconfirmpassword').value;
+            const email = document.getElementById('femail').value.trim();
+            const oldPassword = document.getElementById('foldpassword').value;
+            const newPassword = document.getElementById('fnewpassword').value;
+            const confirmPassword = document.getElementById('fconfirmpassword').value;
 
-        if (newPassword !== confirmPassword) {
-            alert('New password and confirm password do not match.');
-            return;
-        }
-
-        // Send request to update password
-        fetch('/user/update-password', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                oldPassword,
-                newPassword
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Password updated successfully.');
-                // Optionally, reset the form fields
-                document.getElementById('profile-form').reset();
-            } else {
-                alert('Error updating password: ' + data.message);
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match.');
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error updating password:', error);
-            alert('An error occurred while updating the password.');
+
+            // Send request to update password
+            fetch('/user/update-password', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    oldPassword,
+                    newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Password updated successfully.');
+                    // Optionally, reset the form fields
+                    document.getElementById('profile-form').reset();
+                } else {
+                    alert('Error updating password: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating password:', error);
+                alert('An error occurred while updating the password.');
+            });
         });
-    });
     </script>
 </body>
 

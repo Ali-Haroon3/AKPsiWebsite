@@ -194,33 +194,55 @@ router.post('/update-password', authMiddleware, async (req, res) => {
     const userId = req.userId;
     const { email, oldPassword, newPassword } = req.body;
 
+    console.log('Received password update request:', { userId, email });
+
     try {
+        // Validate input
+        if (!email || !oldPassword || !newPassword) {
+            console.log('Missing required fields in request body.');
+            return res.status(400).json({ success: false, message: 'All fields are required.' });
+        }
+
         // Fetch user data
+        console.log('Fetching user data from database.');
         const [results] = await db.query('SELECT email, hashed_password FROM users WHERE id = ?', [userId]);
 
         if (results.length === 0) {
+            console.log('User not found in database.');
             return res.status(404).json({ success: false, message: 'User not found.' });
         }
 
         const user = results[0];
+        console.log('User data fetched:', user);
 
         // Check if email matches
-        if (user.email !== email) {
+        if (user.email.toLowerCase() !== email.toLowerCase()) {
+            console.log('Provided email does not match registered email.');
             return res.status(400).json({ success: false, message: 'Email does not match registered email.' });
         }
 
         // Verify old password
+        console.log('Verifying old password.');
         const isMatch = await bcrypt.compare(oldPassword, user.hashed_password);
         if (!isMatch) {
+            console.log('Old password verification failed.');
             return res.status(400).json({ success: false, message: 'Current password is incorrect.' });
         }
 
         // Hash new password
+        console.log('Hashing new password.');
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         // Update password in database
-        await db.query('UPDATE users SET hashed_password = ? WHERE id = ?', [hashedPassword, userId]);
+        console.log('Updating password in database.');
+        const [updateResult] = await db.query('UPDATE users SET hashed_password = ? WHERE id = ?', [hashedPassword, userId]);
 
+        if (updateResult.affectedRows === 0) {
+            console.log('Password update failed. No rows affected.');
+            return res.status(500).json({ success: false, message: 'Password update failed.' });
+        }
+
+        console.log('Password updated successfully.');
         res.json({ success: true, message: 'Password updated successfully.' });
     } catch (err) {
         console.error('Error updating password:', err);

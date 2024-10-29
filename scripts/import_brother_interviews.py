@@ -83,7 +83,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set paths
-interviews_file = os.path.join('data', 'Points  - Brother Interviews.csv')
+interviews_file = os.path.join('data', 'Points - Interviews List.csv')  # Ensure the correct file name and path
 
 # Connect to MySQL
 db = mysql.connector.connect(
@@ -93,7 +93,7 @@ db = mysql.connector.connect(
     database=os.getenv("MYSQL_DATABASE"),
     port=int(os.getenv("MYSQL_PORT", 3306))
 )
-cursor = db.cursor()
+cursor = db.cursor(dictionary=True)
 
 def process_brother_interviews():
     try:
@@ -101,69 +101,46 @@ def process_brother_interviews():
             reader = csv.reader(f)
             headers = next(reader)  # Skip header row
 
-            current_brother_identikey = None
-            remaining_interviews = 0
-
-            for row_number, row in enumerate(reader, start=2):
-                # Skip empty rows
-                if not any(row):
+            for row_number, row in enumerate(reader, start=2):  # Start at 2 considering header
+                # Ensure the row has enough columns
+                if len(row) < 3:
+                    print(f"Skipping row {row_number}: Not enough columns")
                     continue
 
-                # Trim all cells
-                row = [cell.strip() for cell in row]
+                # Extract necessary fields
+                pledge_full_name = row[0].strip()
+                brother_full_name = row[1].strip()
+                brother_identikey = row[2].strip().lower()
 
-                # Check if this row starts a new brother's section
-                if row[0]:
-                    # Assuming Column 0 contains the count
-                    try:
-                        remaining_interviews = int(row[0])
-                    except ValueError:
-                        print(f"Skipping row {row_number}: Invalid count '{row[0]}'")
-                        remaining_interviews = 0
-                        current_brother_identikey = None
+                # If brother_identikey is 'Not Found' or empty, try to find identikey from brother_full_name
+                if not brother_identikey or brother_identikey.lower() == 'not found':
+                    # Try to look up the identikey in the users table
+                    # Assume brother_full_name is in the format 'Firstname Lastname'
+                    brother_full_name_lower = brother_full_name.lower()
+                    query = "SELECT identikey FROM users WHERE CONCAT(firstname, ' ', lastname) = %s"
+                    cursor.execute(query, (brother_full_name,))
+                    result = cursor.fetchone()
+                    if result:
+                        brother_identikey = result['identikey'].lower()
+                        print(f"Found identikey '{brother_identikey}' for brother '{brother_full_name}'")
+                    else:
+                        print(f"Skipping row {row_number}: Brother identikey not found for '{brother_full_name}'")
                         continue
 
-                    # Assuming Column 1 contains the Brother's Full Name
-                    brother_full_name = row[1]
-                    # Let's look for Brother's Identikey in Column 12 or Column 13
-                    brother_identikey = row[12] if len(row) > 12 and row[12] else row[13] if len(row) > 13 and row[13] else ''
-                    if not brother_identikey:
-                        print(f"Skipping row {row_number}: Missing Brother Identikey")
-                        remaining_interviews = 0
-                        current_brother_identikey = None
-                        continue
+                # Insert into database
+                query = """
+                INSERT INTO brother_interviews (brother_identikey, pledge_full_name)
+                VALUES (%s, %s)
+                """
+                values = (brother_identikey, pledge_full_name)
+                try:
+                    cursor.execute(query, values)
+                    print(f"Inserted interview for Brother Identikey '{brother_identikey}' with Pledge '{pledge_full_name}'")
+                except mysql.connector.Error as err:
+                    print(f"Error inserting interview for Brother Identikey '{brother_identikey}' with Pledge '{pledge_full_name}': {err}")
 
-                    current_brother_identikey = brother_identikey
-                    print(f"Processing interviews for Brother '{brother_full_name}' (Identikey: {current_brother_identikey}), Count: {remaining_interviews}")
-                    continue
-
-                if remaining_interviews > 0:
-                    # Process this row as an interview
-                    # Assuming Column 3 is Brother's Full Name and Column 4 is Pledge's Full Name
-                    pledge_full_name = row[4] if len(row) > 4 else ''
-                    if not pledge_full_name:
-                        print(f"Skipping row {row_number}: Missing Pledge Full Name")
-                        remaining_interviews -= 1
-                        continue
-
-                    # Insert into database
-                    query = """
-                    INSERT INTO brother_interviews (brother_identikey, pledge_full_name)
-                    VALUES (%s, %s)
-                    """
-                    values = (current_brother_identikey.lower(), pledge_full_name)
-                    try:
-                        cursor.execute(query, values)
-                        print(f"Inserted interview for Brother Identikey {current_brother_identikey} with Pledge '{pledge_full_name}'")
-                    except mysql.connector.Error as err:
-                        print(f"Error inserting interview for Brother Identikey {current_brother_identikey} with Pledge '{pledge_full_name}': {err}")
-                    remaining_interviews -= 1
-                else:
-                    # Not in a brother's interview section
-                    continue
-
-            db.commit()
-            print("Brother interviews data imported successfully.")
+        db.commit()
+        print("Brother interviews data imported successfully.")
     except FileNotFoundError:
         print(f"File {interviews_file} not found.")
     except Exception as e:
