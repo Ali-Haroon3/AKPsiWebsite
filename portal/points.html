@@ -156,20 +156,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="fnewpassword" class="form-label">New Password</label>
-                            <input type="password" id="fnewpassword" class="form-control" onkeyup="check();" required />
+                            <input type="password" id="fnewpassword" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label for="fconfirmpassword" class="form-label">
-                                Confirm New Password <span id="password-message"></span>
-                            </label>
-                            <input type="password" id="fconfirmpassword" class="form-control" onkeyup="check();" required />
+                            <label for="fconfirmpassword" class="form-label">Confirm New Password</label>
+                            <input type="password" id="fconfirmpassword" class="form-control" required />
                         </div>
-                        <button type="submit" class="btn btn-primary" style="background-color: #063060; border-color: #063060;">
-                            Save Changes
-                        </button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #063060; border-color: #063060;">Save Changes</button>
                     </form>
                 </div>
-            </div>
             
 
 
@@ -585,7 +580,7 @@ fetch('/user/brother-interviews', {
         submitButton.disabled = false;
     });
 });
-});
+        });
     </script>
 </body>
 
