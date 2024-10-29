@@ -1,7 +1,6 @@
 import csv
 import os
 import mysql.connector
-from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -27,34 +26,47 @@ def process_brother_interviews():
             headers = next(reader)  # Skip header row
 
             for row_number, row in enumerate(reader, start=2):  # Start at 2 considering header
-                pledge_identikey = row[0].strip()
-                timestamp_str = row[2].strip()
-                pledge_full_name = row[3].strip()
-                brother_full_name = row[4].strip()
-                brother_identikey = row[14].strip() if len(row) > 14 else None  # Column O is index 14
+                # Ensure the row has enough columns
+                if len(row) < 15:
+                    print(f"Skipping row {row_number}: Not enough columns")
+                    continue
 
-                if not pledge_identikey or not brother_full_name:
-                    print(f"Skipping row {row_number}: Missing Identikey or Brother Name")
-                    continue  # Skip rows without identikey or brother name
+                # Extract necessary fields
+                brother_identikey = row[0].strip()  # Column A
+                pledge_full_name = row[3].strip()   # Column D
+                brother_identikey_link = row[14].strip()  # Column O
 
-                # Parse timestamp
-                try:
-                    timestamp = datetime.strptime(timestamp_str, '%m/%d/%y %H:%M')
-                except ValueError:
-                    print(f"Invalid timestamp on row {row_number}: {timestamp_str}")
-                    timestamp = None
+                # Validate brother_identikey
+                if not brother_identikey or brother_identikey.lower() == 'not found' or brother_identikey.upper() == 'NULL':
+                    print(f"Skipping row {row_number}: Invalid Brother Identikey in Column A")
+                    continue
+
+                # Validate brother_identikey_link
+                if not brother_identikey_link or brother_identikey_link.lower() == 'not found' or brother_identikey_link.upper() == 'NULL':
+                    print(f"Skipping row {row_number}: Invalid Brother Identikey in Column O")
+                    continue
+
+                # Validate pledge_full_name
+                if not pledge_full_name:
+                    print(f"Skipping row {row_number}: Missing Pledge Full Name")
+                    continue
+
+                # Optional: Ensure that the brother_identikey in Column A matches Column O
+                if brother_identikey != brother_identikey_link:
+                    print(f"Warning row {row_number}: Brother Identikey in Column A ({brother_identikey}) does not match Column O ({brother_identikey_link})")
+                    # Decide whether to skip or proceed. Here, we'll proceed.
 
                 # Insert into database
                 query = """
-                INSERT INTO brother_interviews (pledge_identikey, brother_name, brother_identikey, timestamp)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO brother_interviews (brother_identikey, pledge_full_name)
+                VALUES (%s, %s)
                 """
-                values = (pledge_identikey, brother_full_name, brother_identikey if brother_identikey else None, timestamp)
+                values = (brother_identikey, pledge_full_name)
                 try:
                     cursor.execute(query, values)
-                    print(f"Inserted interview for {pledge_identikey} with {brother_full_name}")
+                    print(f"Inserted interview for Brother Identikey {brother_identikey} with Pledge '{pledge_full_name}'")
                 except mysql.connector.Error as err:
-                    print(f"Error inserting interview for {pledge_identikey} with {brother_full_name}: {err}")
+                    print(f"Error inserting interview for Brother Identikey {brother_identikey} with Pledge '{pledge_full_name}': {err}")
 
         db.commit()
         print("Brother interviews data imported successfully.")
