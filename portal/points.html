@@ -115,25 +115,6 @@
         .table-responsive {
             overflow-x: auto;
         }
-
-        /* Login Button Custom Styles */
-        .modal form .btn-sign-in {
-            background-color: transparent;
-            color: #074B92;
-            font-size: 20px;
-            width: 100%; /* Full width to align with input fields */
-            padding: 10px 20px;
-            font-weight: 500;
-            cursor: pointer;
-            border: 2px solid #074B92; /* Add border for better visibility */
-            border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .modal form .btn-sign-in:hover {
-            background-color: #074B92;
-            color: #fff;
-        }
     </style>
 </head>
 
@@ -154,7 +135,7 @@
         <!-- Profile Information -->
         <section class="profile-info">
             <h1 id="profile-fullname">Preferred Name</h1>
-            <p id="profile-total-points">Total Points: 0</p>
+            <p id="profile-total-points">Total Points</p>
         </section>
 
         <!-- Main Content -->
@@ -278,127 +259,127 @@
                 method: 'GET',
                 credentials: 'include'
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(user => {
-                    // Populate Profile Info
-                    document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
-                    document.getElementById('profile-total-points').innerText = `Total Points: ${user.totalPoints || 0}`;
-                    document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(user => {
+                // Populate Profile Info
+                document.getElementById('profile-fullname').innerText = `${user.firstname} ${user.lastname}`;
+                document.getElementById('profile-total-points').innerText = `Total Points: ${user.totalPoints || 0}`;
+                document.getElementById('unexcused-absences-count').innerText = user.unexcusedAbsences || 0;
 
-                    // Define all point categories
-                    const points = {
-                        'Unexcused Absences': user.unexcused_absences,
-                        'Alumni Tailgate': user.alumni_tailgate,
-                        'Assisting with Interviews': user.assisting_with_interviews,
-                        'Big Brother Mentor': user.big_brother_mentor,
-                        'Brother Interviews': user.brother_interviews,
-                        'BUSIK Letters': user.busik_letters,
-                        'Chapter Attendance': user.chapter_attendance,
-                        'Committee/Cabinet Member': user.committee_cabinet_member,
-                        'Domingos': user.domingos,
-                        'Exec Member': user.exec_member,
-                        'Family Hangouts': user.family_hangouts,
-                        'Family Head': user.family_head,
-                        'Forms': user.forms,
-                        'Missing/Late Forms': user.missing_late_forms,
-                        'Hosting Family Initiation': user.hosting_family_initiation,
-                        'Hosting Official Initiation': user.hosting_official_initiation,
-                        'Initiation So-Bro': user.initiation_so_bro,
-                        'Perfect Attendance': user.perfect_attendance,
-                        'Perfect Recruitment Attendance': user.perfect_recruitment_attendance,
-                        'Photocircle Upload (10)': user.photocircle_upload_10,
-                        'Posting on Story': user.posting_on_story,
-                        'Professional Headshot': user.professional_headshot,
-                        'Recruitment Tabling': user.recruitment_tabling,
-                        'Rush Attendance': user.rush_attendance,
-                        'Rush Event Missed': user.rush_event_missed,
-                        'Service Event Attendance': user.service_event_attendance,
-                        'So-Bro': user.sobro,
-                        'Wellness Week Event(s)': user.wellness_week_events,
-                        'Zeta Chats': user.zeta_chats
-                    };
+                // Define all point categories
+                const points = {
+                    'Unexcused Absences': user.unexcused_absences,
+                    'Alumni Tailgate': user.alumni_tailgate,
+                    'Assisting with Interviews': user.assisting_with_interviews,
+                    'Big Brother Mentor': user.big_brother_mentor,
+                    'Brother Interviews': user.brother_interviews,
+                    'BUSIK Letters': user.busik_letters,
+                    'Chapter Attendance': user.chapter_attendance,
+                    'Committee/Cabinet Member': user.committee_cabinet_member,
+                    'Domingos': user.domingos,
+                    'Exec Member': user.exec_member,
+                    'Family Hangouts': user.family_hangouts,
+                    'Family Head': user.family_head,
+                    'Forms': user.forms,
+                    'Missing/Late Forms': user.missing_late_forms,
+                    'Hosting Family Initiation': user.hosting_family_initiation,
+                    'Hosting Official Initiation': user.hosting_official_initiation,
+                    'Initiation So-Bro': user.initiation_so_bro,
+                    'Perfect Attendance': user.perfect_attendance,
+                    'Perfect Recruitment Attendance': user.perfect_recruitment_attendance,
+                    'Photocircle Upload (10)': user.photocircle_upload_10,
+                    'Posting on Story': user.posting_on_story,
+                    'Professional Headshot': user.professional_headshot,
+                    'Recruitment Tabling': user.recruitment_tabling,
+                    'Rush Attendance': user.rush_attendance,
+                    'Rush Event Missed': user.rush_event_missed,
+                    'Service Event Attendance': user.service_event_attendance,
+                    'So-Bro': user.sobro,
+                    'Wellness Week Event(s)': user.wellness_week_events,
+                    'Zeta Chats': user.zeta_chats
+                };
 
-                    // Filter out zero or null values
-                    const filteredPoints = Object.entries(points)
-                        .filter(([key, value]) => value > 0)
-                        .reduce((obj, [key, value]) => {
-                            obj[key] = value;
-                            return obj;
-                        }, {});
+                // Filter out zero or null values
+                const filteredPoints = Object.entries(points)
+                    .filter(([key, value]) => value > 0)
+                    .reduce((obj, [key, value]) => {
+                        obj[key] = value;
+                        return obj;
+                    }, {});
 
-                    // Create Points Chart
-                    const chartData = Object.values(filteredPoints);
-                    const ctx = document.getElementById('pointsChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: Object.keys(filteredPoints),
-                            datasets: [{
-                                data: chartData,
-                                backgroundColor: generateColors(Object.keys(filteredPoints).length)
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'right',
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function (context) {
-                                            const label = context.label || '';
-                                            const value = context.raw || 0;
-                                            return `${label}: ${value}`;
-                                        }
+                // Create Points Chart
+                const chartData = Object.values(filteredPoints);
+                const ctx = document.getElementById('pointsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(filteredPoints),
+                        datasets: [{
+                            data: chartData,
+                            backgroundColor: generateColors(Object.keys(filteredPoints).length)
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        return `${label}: ${value}`;
                                     }
                                 }
-                            },
+                            }
                         },
-                    });
+                    },
+                });
 
-                    // Fetch Leaderboard Data
-                    return fetch('/user/leaderboard', {
-                        method: 'GET',
-                        credentials: 'include'
-                    });
-                })
-                .then(response => response.json())
-                .then(leaderboard => {
-                    const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
-                    leaderboard.forEach((entry, index) => {
-                        const tr = document.createElement('tr');
+                // Fetch Leaderboard Data
+                return fetch('/user/leaderboard', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+            })
+            .then(response => response.json())
+            .then(leaderboard => {
+                const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
+                leaderboard.forEach((entry, index) => {
+                    const tr = document.createElement('tr');
 
-                        // Rank
-                        const rankTd = document.createElement('td');
-                        rankTd.innerText = index + 1;
-                        tr.appendChild(rankTd);
+                    // Rank
+                    const rankTd = document.createElement('td');
+                    rankTd.innerText = index + 1;
+                    tr.appendChild(rankTd);
 
-                        // Name or Identikey
-                        const nameTd = document.createElement('td');
-                        let name;
-                        if (entry.firstname && entry.lastname) {
-                            name = `${entry.firstname} ${entry.lastname}`;
-                        } else {
-                            name = entry.identikey;
-                        }
-                        nameTd.innerText = name;
-                        tr.appendChild(nameTd);
+                    // Name or Identikey
+                    const nameTd = document.createElement('td');
+                    let name;
+                    if (entry.firstname && entry.lastname) {
+                        name = `${entry.firstname} ${entry.lastname}`;
+                    } else {
+                        name = entry.identikey;
+                    }
+                    nameTd.innerText = name;
+                    tr.appendChild(nameTd);
 
-                        // Total Points
-                        const pointsTd = document.createElement('td');
-                        pointsTd.innerText = entry.total_points;
-                        tr.appendChild(pointsTd);
+                    // Total Points
+                    const pointsTd = document.createElement('td');
+                    pointsTd.innerText = entry.total_points;
+                    tr.appendChild(pointsTd);
 
-                        leaderboardTableBody.appendChild(tr);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
+                    leaderboardTableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error:', error));
 
             /**
              * Generates an array of distinct colors using HSL.
@@ -414,7 +395,8 @@
                 }
                 return colors;
             }
-        </script>
-    </body>
+        });
+    </script>
+</body>
 
 </html>
