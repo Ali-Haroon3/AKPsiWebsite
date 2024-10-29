@@ -1,3 +1,4 @@
+// src/routes/auth.js
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -43,9 +44,8 @@ router.post('/login', async (req, res) => {
             user: {
                 firstname: user.firstname,
                 lastname: user.lastname,
-                year: new Date(user.created_at).getFullYear(),
                 totalPoints: user.total_points,
-                unexcusedAbsences: user.unexcused_absences,
+                unexcusedAbsences: user.unexcused_absences, // Included unexcused_absences
                 points: {
                     alumniTailgate: user.alumni_tailgate,
                     assistingWithInterviews: user.assisting_with_interviews,
@@ -58,11 +58,22 @@ router.post('/login', async (req, res) => {
                     familyHangouts: user.family_hangouts,
                     familyHead: user.family_head,
                     formCompletions: user.forms, // Adjusted to match DB column
+                    missingLateForms: user.missing_late_forms, // Added missingLateForms
                     hostingInitiation: user.hosting_family_initiation, // Adjusted to match DB column
+                    hostingOfficialInitiation: user.hosting_official_initiation, // Adjusted to match DB column
+                    initiationSoBro: user.initiation_so_bro, // Adjusted naming
+                    perfectAttendance: user.perfect_attendance,
+                    perfectRecruitmentAttendance: user.perfect_recruitment_attendance,
+                    photocircleUpload10: user.photocircle_upload_10, // Adjusted naming
+                    postingOnStory: user.posting_on_story,
                     professionalHeadshot: user.professional_headshot,
+                    recruitmentTabling: user.recruitment_tabling,
                     rushAttendance: user.rush_attendance,
-                    serviceEvent: user.service_event_attendance, // Adjusted to match DB column
-                    wellnessWeek: user.wellness_week_events, // Adjusted to match DB column
+                    rushEventMissed: user.rush_event_missed,
+                    serviceEventAttendance: user.service_event_attendance, // Adjusted naming
+                    sobro: user.sobro,
+                    wellnessWeekEvents: user.wellness_week_events,
+                    zetaChats: user.zeta_chats
                 },
             },
         });

@@ -983,17 +983,21 @@ details[open] summary::after {
     background-color: transparent;
     color: #074B92;
     font-size: 20px;
-    width: 100%; /* Full width */
+    width: 100%; /* Full width to align with input fields */
     padding: 10px 20px;
     font-weight: 500;
     cursor: pointer;
-    border: none;
-    border-radius: 4px;
     border: 2px solid #074B92; /* Add border for better visibility */
+    border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
 }
-.modal form input.btn-sign-in:hover {
+
+/* .modal form input.btn-sign-in:hover {
     color: var(---dark-secondary-color);
+} */
+.modal form .btn-sign-in:hover {
+    background-color: #074B92;
+    color: #fff;
 }
 
 
