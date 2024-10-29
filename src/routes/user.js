@@ -83,5 +83,60 @@ router.get('/leaderboard', authMiddleware, (req, res) => {
             res.status(500).json({ message: 'Error fetching leaderboard data' });
         });
 });
+router.get('/brother-interviews', authMiddleware, (req, res) => {
+    const userId = req.userId;
+
+    // Get the identikey of the user
+    const getUserIdentikeyQuery = 'SELECT identikey FROM users WHERE id = ?';
+    db.query(getUserIdentikeyQuery, [userId])
+        .then(([results]) => {
+            if (results.length === 0) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const identikey = results[0].identikey;
+
+            // Now, get the brother interviews
+            const getInterviewsQuery = `
+                SELECT brother_name, DATE_FORMAT(timestamp, '%Y-%m-%d') as date
+                FROM brother_interviews
+                WHERE pledge_identikey = ?
+                ORDER BY timestamp DESC
+            `;
+            return db.query(getInterviewsQuery, [identikey]);
+        })
+        .then(([interviews]) => {
+            res.json(interviews);
+        })
+        .catch(err => {
+            console.error('Error fetching brother interviews:', err);
+            res.status(500).json({ message: 'Error fetching brother interviews' });
+        });
+});
+router.get('/points/bottom50', authMiddleware, async (req, res) => {
+    try {
+        // Get the total number of users
+        const [countResult] = await db.query('SELECT COUNT(*) as count FROM users');
+        const totalUsers = countResult[0].count;
+
+        const offset = Math.floor(totalUsers / 2);
+
+        // Get the total_points at that position
+        const [pointsResult] = await db.query(
+            'SELECT total_points FROM users ORDER BY total_points ASC LIMIT 1 OFFSET ?',
+            [offset]
+        );
+
+        if (pointsResult.length === 0) {
+            return res.status(404).json({ message: 'No users found' });
+        }
+
+        const bottom50Points = pointsResult[0].total_points;
+
+        res.json({ bottom50Points });
+    } catch (err) {
+        console.error('Error fetching bottom 50 points:', err);
+        res.status(500).json({ message: 'Error fetching bottom 50 points' });
+    }
+});
 
 module.exports = router;
