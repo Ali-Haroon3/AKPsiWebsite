@@ -10,7 +10,6 @@
   <link href="/assets/css/ionics.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/assets/css/ionics.min.css" rel="stylesheet">
   <link href="/assets/css/animate.min.css" rel="stylesheet">
   <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet">
   <link href="/assets/css/fonts.css" rel="stylesheet">
@@ -39,7 +38,7 @@
     </section>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function () {
         // Mock fetching an array of JSON file names
         simulateFetchJsonFiles().then(jsonFiles => {
           jsonFiles.forEach(file => {
@@ -77,12 +76,21 @@
           }
         ];
 
+        // Helper function to convert month abbreviations to numbers
+        const monthToNumber = (month) => {
+          const months = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, 
+                           Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
+          return months[month] || 0;
+        };
+
         // Sort events by month and date
         testData.sort((a, b) => {
-          return (a.month + a.date) < (b.month + b.date) ? 1 : -1;
+          const dateA = new Date(2024, monthToNumber(a.month) - 1, parseInt(a.date));
+          const dateB = new Date(2024, monthToNumber(b.month) - 1, parseInt(b.date));
+          return dateA - dateB; // Ascending order
         });
 
-        // Process each test event
+        // Process each sorted event
         testData.forEach(event => {
           document.querySelector('.calendar-body').appendChild(createCalendarEvent(event));
         });
@@ -116,7 +124,7 @@
         return new Promise(resolve => {
           // Simulate an async task where you fetch JSON file names
           setTimeout(() => {
-            resolve(['data1.json', 'data2.json', 'data3.json']);  // Simulate file names
+            resolve(['data1.json', 'data2.json', 'data3.json']); // Simulate file names
           }, 1000);
         });
       }
