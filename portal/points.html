@@ -399,29 +399,67 @@
             }
         });
        // Fetch Brother Interviews
+        // fetch('/user/brother-interviews', {
+        //     method: 'GET',
+        //     credentials: 'include'
+        // })
+        // .then(response => response.json())
+        // .then(interviews => {
+        //     const tableBody = document.getElementById('brother-interviews-table-body');
+        //     interviews.forEach(interview => {
+        //         const tr = document.createElement('tr');
+
+        //         const nameTd = document.createElement('td');
+        //         nameTd.innerText = interview.pledge_full_name;  // Updated field
+        //         tr.appendChild(nameTd);
+
+        //         // Optional: Remove or adjust the dateTd
+        //         // const dateTd = document.createElement('td');
+        //         // dateTd.innerText = interview.date || 'N/A';
+        //         // tr.appendChild(dateTd);
+
+        //         tableBody.appendChild(tr);
+        //     });
+        // })
+        // .catch(error => console.error('Error fetching brother interviews:', error));
         fetch('/user/brother-interviews', {
-            method: 'GET',
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(interviews => {
-            const tableBody = document.getElementById('brother-interviews-table-body');
-            interviews.forEach(interview => {
-                const tr = document.createElement('tr');
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(interviews => {
+        const tableBody = document.getElementById('brother-interviews-table-body');
+        tableBody.innerHTML = ''; // Clear any existing content
 
-                const nameTd = document.createElement('td');
-                nameTd.innerText = interview.pledge_full_name;  // Updated field
-                tr.appendChild(nameTd);
+        if (interviews.length === 0) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 2;
+            td.innerText = 'No interviews found.';
+            tr.appendChild(td);
+            tableBody.appendChild(tr);
+            return;
+        }
 
-                // Optional: Remove or adjust the dateTd
-                // const dateTd = document.createElement('td');
-                // dateTd.innerText = interview.date || 'N/A';
-                // tr.appendChild(dateTd);
+        interviews.forEach(interview => {
+            const tr = document.createElement('tr');
 
-                tableBody.appendChild(tr);
-            });
-        })
-        .catch(error => console.error('Error fetching brother interviews:', error));
+            const pledgeNameTd = document.createElement('td');
+            pledgeNameTd.innerText = interview.pledge_full_name;
+            tr.appendChild(pledgeNameTd);
+
+            // If you want to display any additional info, add more <td> elements here
+            // For now, we'll leave the Date column empty or remove it
+
+            tableBody.appendChild(tr);
+        });
+    })
+    .catch(error => console.error('Error fetching brother interviews:', error));
 
         fetch('/user/points/bottom50', {
             method: 'GET',

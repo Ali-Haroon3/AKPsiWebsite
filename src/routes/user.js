@@ -83,34 +83,59 @@ router.get('/leaderboard', authMiddleware, (req, res) => {
             res.status(500).json({ message: 'Error fetching leaderboard data' });
         });
 });
-router.get('/brother-interviews', authMiddleware, (req, res) => {
-    const userId = req.userId;
+// router.get('/brother-interviews', authMiddleware, (req, res) => {
+//     const userId = req.userId;
 
-    // Get the identikey of the user
-    const getUserIdentikeyQuery = 'SELECT identikey FROM users WHERE id = ?';
-    db.query(getUserIdentikeyQuery, [userId])
-        .then(([results]) => {
-            if (results.length === 0) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            const identikey = results[0].identikey;
+//     // Get the identikey of the user
+//     const getUserIdentikeyQuery = 'SELECT identikey FROM users WHERE id = ?';
+//     db.query(getUserIdentikeyQuery, [userId])
+//         .then(([results]) => {
+//             if (results.length === 0) {
+//                 return res.status(404).json({ message: 'User not found' });
+//             }
+//             const identikey = results[0].identikey;
 
-            // Now, get the brother interviews
-            const getInterviewsQuery = `
-                SELECT brother_name, DATE_FORMAT(timestamp, '%Y-%m-%d') as date
-                FROM brother_interviews
-                WHERE pledge_identikey = ?
-                ORDER BY timestamp DESC
-            `;
-            return db.query(getInterviewsQuery, [identikey]);
-        })
-        .then(([interviews]) => {
-            res.json(interviews);
-        })
-        .catch(err => {
-            console.error('Error fetching brother interviews:', err);
-            res.status(500).json({ message: 'Error fetching brother interviews' });
-        });
+//             // Now, get the brother interviews
+//             const getInterviewsQuery = `
+//                 SELECT brother_name, DATE_FORMAT(timestamp, '%Y-%m-%d') as date
+//                 FROM brother_interviews
+//                 WHERE pledge_identikey = ?
+//                 ORDER BY timestamp DESC
+//             `;
+//             return db.query(getInterviewsQuery, [identikey]);
+//         })
+//         .then(([interviews]) => {
+//             res.json(interviews);
+//         })
+//         .catch(err => {
+//             console.error('Error fetching brother interviews:', err);
+//             res.status(500).json({ message: 'Error fetching brother interviews' });
+//         });
+// });
+router.get('/brother-interviews', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        // Get the identikey of the user (brother)
+        const [userResults] = await db.query('SELECT identikey FROM users WHERE id = ?', [userId]);
+
+        if (userResults.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const brotherIdentikey = userResults[0].identikey;
+
+        // Fetch all pledges interviewed by this brother
+        const [interviews] = await db.query(
+            'SELECT pledge_full_name FROM brother_interviews WHERE brother_identikey = ?',
+            [brotherIdentikey]
+        );
+
+        res.json(interviews);
+    } catch (err) {
+        console.error('Error fetching brother interviews:', err);
+        res.status(500).json({ message: 'Error fetching brother interviews' });
+    }
 });
 router.get('/points/bottom50', authMiddleware, async (req, res) => {
     try {
