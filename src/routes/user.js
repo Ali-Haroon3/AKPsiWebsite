@@ -190,5 +190,42 @@ router.get('/points/bottom50', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error fetching bottom 50 points' });
     }
 });
+router.post('/update-password', authMiddleware, async (req, res) => {
+    const userId = req.userId;
+    const { email, oldPassword, newPassword } = req.body;
+
+    try {
+        // Fetch user data
+        const [results] = await db.query('SELECT email, hashed_password FROM users WHERE id = ?', [userId]);
+
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        const user = results[0];
+
+        // Check if email matches
+        if (user.email !== email) {
+            return res.status(400).json({ success: false, message: 'Email does not match registered email.' });
+        }
+
+        // Verify old password
+        const isMatch = await bcrypt.compare(oldPassword, user.hashed_password);
+        if (!isMatch) {
+            return res.status(400).json({ success: false, message: 'Current password is incorrect.' });
+        }
+
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update password in database
+        await db.query('UPDATE users SET hashed_password = ? WHERE id = ?', [hashedPassword, userId]);
+
+        res.json({ success: true, message: 'Password updated successfully.' });
+    } catch (err) {
+        console.error('Error updating password:', err);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
 
 module.exports = router;

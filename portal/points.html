@@ -143,24 +143,30 @@
         <section class="points-content container">
             <div class="points-row">
                 <!-- Profile Settings -->
+              <!-- Profile Settings -->
                 <div class="points-outline">
                     <h2>Profile Settings</h2>
-                    <form class="points-form">
+                    <form id="profile-form" class="points-form">
                         <div class="mb-3">
-                            <label for="ffirstname" class="form-label">First Name</label>
-                            <input type="text" id="ffirstname" class="form-control" required />
+                            <label for="femail" class="form-label">Email</label>
+                            <input type="email" id="femail" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label for="flastname" class="form-label">Last Name</label>
-                            <input type="text" id="flastname" class="form-control" required />
+                            <label for="foldpassword" class="form-label">Current Password</label>
+                            <input type="password" id="foldpassword" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label for="fpassword" class="form-label">Password</label>
-                            <input type="password" id="fpassword" class="form-control" required />
+                            <label for="fnewpassword" class="form-label">New Password</label>
+                            <input type="password" id="fnewpassword" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="fconfirmpassword" class="form-label">Confirm New Password</label>
+                            <input type="password" id="fconfirmpassword" class="form-control" required />
                         </div>
                         <button type="submit" class="btn btn-primary" style="background-color: #063060; border-color: #063060;">Save Changes</button>
                     </form>
                 </div>
+
 
                <!-- Brother Interviews -->
             <div class="points-outline">
@@ -506,6 +512,47 @@ fetch('/user/brother-interviews', {
             document.getElementById('points-bottom-50').innerText = `Points for Bottom 50%: ${data.bottom50Points || 0}`;
         })
         .catch(error => console.error('Error fetching bottom 50 points:', error));
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('femail').value.trim();
+        const oldPassword = document.getElementById('foldpassword').value;
+        const newPassword = document.getElementById('fnewpassword').value;
+        const confirmPassword = document.getElementById('fconfirmpassword').value;
+
+        if (newPassword !== confirmPassword) {
+            alert('New password and confirm password do not match.');
+            return;
+        }
+
+        // Send request to update password
+        fetch('/user/update-password', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                oldPassword,
+                newPassword
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Password updated successfully.');
+                // Optionally, reset the form fields
+                document.getElementById('profile-form').reset();
+            } else {
+                alert('Error updating password: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error updating password:', error);
+            alert('An error occurred while updating the password.');
+        });
+    });
     </script>
 </body>
 
