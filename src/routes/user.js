@@ -148,22 +148,21 @@ router.get('/brother-interviews', authMiddleware, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const brotherIdentikey = userResults[0].identikey;
+        const brotherIdentikey = userResults[0].identikey.toLowerCase();
 
-        // Fetch all pledges interviewed by this brother and aggregate them into a list
+        // Fetch all pledges interviewed by this brother
         const [interviews] = await db.query(
             'SELECT pledge_full_name FROM brother_interviews WHERE brother_identikey = ?',
             [brotherIdentikey]
         );
 
-        const pledgeNames = interviews.map(interview => interview.pledge_full_name);
-
-        res.json({ pledges: pledgeNames });
+        res.json(interviews);
     } catch (err) {
         console.error('Error fetching brother interviews:', err);
         res.status(500).json({ message: 'Error fetching brother interviews' });
     }
 });
+
 
 router.get('/points/bottom50', authMiddleware, async (req, res) => {
     try {

@@ -423,6 +423,44 @@
         // })
         // .catch(error => console.error('Error fetching brother interviews:', error));
      // Fetch Brother Interviews with Aggregation
+// fetch('/user/brother-interviews', {
+//     method: 'GET',
+//     credentials: 'include'
+// })
+// .then(response => {
+//     if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+// })
+// .then(data => {
+//     const tableBody = document.getElementById('brother-interviews-table-body');
+//     tableBody.innerHTML = ''; // Clear any existing content
+
+//     if (!data.pledges || data.pledges.length === 0) {
+//         const tr = document.createElement('tr');
+//         const td = document.createElement('td');
+//         td.colSpan = 2;
+//         td.innerText = 'No interviews found.';
+//         tr.appendChild(td);
+//         tableBody.appendChild(tr);
+//         return;
+//     }
+
+//     data.pledges.forEach(pledgeName => {
+//         const tr = document.createElement('tr');
+
+//         const pledgeNameTd = document.createElement('td');
+//         pledgeNameTd.innerText = pledgeName;
+//         tr.appendChild(pledgeNameTd);
+
+//         // Optional: Add more <td> elements if needed
+
+//         tableBody.appendChild(tr);
+//     });
+// })
+// .catch(error => console.error('Error fetching brother interviews:', error));
+// Fetch Brother Interviews
 fetch('/user/brother-interviews', {
     method: 'GET',
     credentials: 'include'
@@ -433,28 +471,26 @@ fetch('/user/brother-interviews', {
     }
     return response.json();
 })
-.then(data => {
+.then(interviews => {
     const tableBody = document.getElementById('brother-interviews-table-body');
     tableBody.innerHTML = ''; // Clear any existing content
 
-    if (!data.pledges || data.pledges.length === 0) {
+    if (interviews.length === 0) {
         const tr = document.createElement('tr');
         const td = document.createElement('td');
-        td.colSpan = 2;
+        td.colSpan = 1;
         td.innerText = 'No interviews found.';
         tr.appendChild(td);
         tableBody.appendChild(tr);
         return;
     }
 
-    data.pledges.forEach(pledgeName => {
+    interviews.forEach(interview => {
         const tr = document.createElement('tr');
 
         const pledgeNameTd = document.createElement('td');
-        pledgeNameTd.innerText = pledgeName;
+        pledgeNameTd.innerText = interview.pledge_full_name;
         tr.appendChild(pledgeNameTd);
-
-        // Optional: Add more <td> elements if needed
 
         tableBody.appendChild(tr);
     });

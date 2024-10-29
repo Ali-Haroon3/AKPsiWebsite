@@ -32,36 +32,30 @@ def process_brother_interviews():
                     continue
 
                 # Extract necessary fields
-                brother_identikey = row[0].strip()  # Column A
+                brother_identikey_a = row[0].strip()  # Column A
+                count = row[1].strip()  # Column B
                 pledge_full_name = row[3].strip()   # Column D
-                brother_identikey_link = row[14].strip()  # Column O
+                brother_identikey_o = row[14].strip()  # Column O
 
-                # Validate brother_identikey
-                if not brother_identikey or brother_identikey.lower() == 'not found' or brother_identikey.upper() == 'NULL':
-                    print(f"Skipping row {row_number}: Invalid Brother Identikey in Column A")
+                # Skip rows where both brother_identikeys are missing
+                if not brother_identikey_a and not brother_identikey_o:
+                    print(f"Skipping row {row_number}: Both Brother Identikeys are missing")
                     continue
 
-                # Validate brother_identikey_link
-                if not brother_identikey_link or brother_identikey_link.lower() == 'not found' or brother_identikey_link.upper() == 'NULL':
-                    print(f"Skipping row {row_number}: Invalid Brother Identikey in Column O")
-                    continue
+                # Use brother_identikey from Column A if available, else from Column O
+                brother_identikey = brother_identikey_a if brother_identikey_a else brother_identikey_o
 
                 # Validate pledge_full_name
                 if not pledge_full_name:
                     print(f"Skipping row {row_number}: Missing Pledge Full Name")
                     continue
 
-                # Optional: Ensure that the brother_identikey in Column A matches Column O
-                if brother_identikey != brother_identikey_link:
-                    print(f"Warning row {row_number}: Brother Identikey in Column A ({brother_identikey}) does not match Column O ({brother_identikey_link})")
-                    # Decide whether to skip or proceed. Here, we'll proceed.
-
                 # Insert into database
                 query = """
                 INSERT INTO brother_interviews (brother_identikey, pledge_full_name)
                 VALUES (%s, %s)
                 """
-                values = (brother_identikey, pledge_full_name)
+                values = (brother_identikey.lower(), pledge_full_name)
                 try:
                     cursor.execute(query, values)
                     print(f"Inserted interview for Brother Identikey {brother_identikey} with Pledge '{pledge_full_name}'")
