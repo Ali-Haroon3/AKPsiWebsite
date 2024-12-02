@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set paths
-points_file = os.path.join('data', 'Points  - Total Points.csv')
+points_file = os.path.join('data', 'Points - Total Points.csv')
 
 # Connect to MySQL
 db = mysql.connector.connect(
