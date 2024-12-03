@@ -170,7 +170,7 @@ router.get('/points/bottom50', authMiddleware, async (req, res) => {
     try {
         // Get the total number of users
         const [countResult] = await db.query('SELECT COUNT(*) as count FROM users');
-        const totalUsers = countResult[0].count - 3;
+        const totalUsers = countResult[0].count + 3;
 
         const offset = Math.floor(totalUsers / 2);
 
