@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5501
     git add .
-    git commit -m "Recruitment Form"
+    git commit -m "Recruitment update"
     git push heroku main
 }
