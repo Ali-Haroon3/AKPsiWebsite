@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5501
     git add .
-    git commit -m "home page"
+    git commit -m "BUSIK"
     git push heroku main
 }
