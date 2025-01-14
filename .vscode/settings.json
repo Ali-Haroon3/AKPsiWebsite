@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5501
     git add .
-    git commit -m "Dates"
+    git commit -m "info session"
     git push heroku main
 }
