@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5501
     git add .
-    git commit -m "new exec 2"
+    git commit -m "new exec 3"
     git push heroku main
 }
